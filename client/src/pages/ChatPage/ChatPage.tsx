@@ -1,12 +1,12 @@
 
 import { CiSearch } from "react-icons/ci";
 import { Chats } from './layouts/Chats';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { chatContext } from "@/context/ChatContext";
-import { FaPlus } from "react-icons/fa6";
 import { GroupModal } from "./components/GroupModal";
 import { CiChat1 } from "react-icons/ci";
 
+import { SearchModal } from "./components/SearchModal";
 const data= [
   { profile:"https://a.storyblok.com/f/191576/1200x800/faa88c639f/round_profil_picture_before_.webp",
   name:"Umar Qureshi",
@@ -81,16 +81,17 @@ const   {selectedChat}:any = useContext(chatContext);
           value={search}
           onChange={(e)=>setSearch(e.target.value)}
             className="w-full bg-transparent border-2 border-[#272A30] self-center  h-12  rounded-3xl bg-opacity-0 pl-12" // Add left padding to accommodate the icon
-            placeholder="Search"
+            placeholder="Search chats"
           />
           <div className="absolute inset-y-0 left-2 pl-3 flex items-center pointer-events-none">
             <CiSearch className="h-5 w-5 text-gray-400" />{" "}
             {/* Adjust size and color as needed */}
           </div>
         </div>
-    <div className="">
-   <GroupModal/>
-    </div>
+   
+        
+     <GroupModal/>
+  
 
 
         {/* side chat */}
@@ -102,7 +103,7 @@ const   {selectedChat}:any = useContext(chatContext);
  
  {/* Right Side */}
 
-      <div className="flex-1 bg-[#1C1E22] h-screen">
+      <div className="flex-1 bg-[#1C1E22] h-screen text-white">
       {selectedChat ? selectedChat : (
         <div className="flex flex-col justify-center items-center h-screen opacity-60 ">
 

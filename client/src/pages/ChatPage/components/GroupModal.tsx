@@ -10,9 +10,36 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useState } from "react"
 import { FaPlus } from "react-icons/fa6"
+import { SearchedUsers } from "./SearchedUsers"
 
+const data= [
+  { profile:"https://a.storyblok.com/f/191576/1200x800/faa88c639f/round_profil_picture_before_.webp",
+  name:"Umar Qureshi",
+  lastMessage:"Hello world how are you what have you been ",
+  time:"9:40PM",
+  email:"editorumer@mgail.com",
+  active:true},
+  { profile:"https://a.storyblok.com/f/191576/1200x800/faa88c639f/round_profil_picture_before_.webp",
+  name:"Umar hayat",
+  lastMessage:"Hello world how are you what have you been ",
+  time:"9:40PM",
+  email:"editorumer@mgail.com",
+  active:false},
+  
+  
+  
+]
 export function GroupModal() {
+
+  const [groupChatName,setGroupChatName] = useState('')
+  const [searchResults,setSearchResults] = useState([])
+  const [selectedUsers,setSelectedUsers] = useState([])
+  const [searchInput,setSearchInput] = useState('')
+
+  // append with the chats ( Side bar chats )
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -23,35 +50,35 @@ export function GroupModal() {
       </DialogTrigger>
       <DialogContent  className=" sm:max-w-[425px] ">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Create a group</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Add users by email to chat with
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
+
+          <div className=" items-center gap-4">
             <Input
               id="name"
-              defaultValue="Pedro Duarte"
-              className="col-span-3"
+              placeholder="Group Chat Name"
+              className="w-full"
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
+
+          <div className=" items-center gap-4">
             <Input
               id="username"
-              defaultValue="@peduarte"
+          placeholder="Add Users email eg abc@gmail.com"
               className="col-span-3"
             />
           </div>
         </div>
+          {/* Selected Users */}
+        {/* Rendering Searched Users */}
+        {data.map((user)=> <SearchedUsers profile={user.profile} name={user.name} email={user.email}/>)}
+        
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit">Create group</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
