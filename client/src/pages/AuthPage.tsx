@@ -46,7 +46,7 @@ console.log(isPasswordSame);
 
   return (
     <div className="h-[80vh] w-full flex justify-center items-center">
-      <Tabs defaultValue="account" className="w-[400px]">
+      <Tabs defaultValue="sign-in" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="sign-in">Sign in</TabsTrigger>
           <TabsTrigger value="sign-up">Sign up</TabsTrigger>
@@ -56,7 +56,7 @@ console.log(isPasswordSame);
             <CardHeader>
               <CardTitle>Login </CardTitle>
               <CardDescription>
-                Make changes to your account here. Click save when you're done.
+                Enter your crendentials to Login
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
@@ -86,7 +86,9 @@ console.log(isPasswordSame);
                   Show password
                 </label>
               </div>
-              <Button className="w-full spacey4">Login</Button>
+              <Button className="w-full space-y-4">Login</Button>
+              <Button  className="w-full bg-red-900 hover:bg-red-800 space-y-4">Login with Google</Button>
+
             </CardFooter>
           </Card>
         </TabsContent>
@@ -132,6 +134,7 @@ console.log(isPasswordSame);
               <Button 
               className="w-full space-y-4"
               >Sign Up</Button>
+              
             </CardFooter>
           </Card>
         </TabsContent>

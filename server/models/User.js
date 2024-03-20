@@ -15,10 +15,12 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  date: {
-    type: Date,
-    default: Date.now
+  avatar: {
+    type: String,
+    default: "https://cdn-icons-png.flaticon.com/512/149/149071.png"
   }
-});
+},
+{timestamps: true}
+);
 
 module.exports = User = mongoose.model("users", UserSchema);
