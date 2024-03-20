@@ -1,2 +1,3 @@
 // set cloudinay when adding functionality of Image uploading!
 // debug the error handling in controllers
+// Make a search bar in Header to text those who aren't already chatting with the person

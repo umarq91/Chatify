@@ -1,0 +1,9 @@
+div.scrollbar-thin::-webkit-scrollbar {
+    width: 0.5rem;
+    background-color: transparent;
+  }
+  
+  div.scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 0.5rem;
+  }
