@@ -71,7 +71,7 @@ const   {selectedChat}:any = useContext(chatContext);
 
   return (
     <div className="flex">
-      <div className="hidden  md:block  lg:w-[30%] xl:w-[25%] bg-[#17191C] h-screen">
+      <div className="hidden  md:block  lg:w-[30%] xl:w-[25%] bg-[#17191C] h-screen text-white">
 
 
 
