@@ -1,0 +1,2 @@
+// set cloudinay when adding functionality of Image uploading!
+// debug the error handling in controllers

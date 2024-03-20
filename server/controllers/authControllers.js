@@ -5,20 +5,27 @@ const bcrypt = require("bcrypt");
 let salt = bcrypt.genSaltSync(10);
 
 const signUp = async (req, res, next) => {
-  const { username, password, email ,avatar} = req.body;
+  const { username, password, email } = req.body;
 
   try {
     // check if username already exists
-    let check = await UserModel.find({ username });
+    let existingUser = await UserModel.find({ email })
+    
+    if (existingUser.length>0) {
+      // If the email already exists, return an error response to the frontend
+      return res.status(400).json({ error: "Email already exists" });
+    }
+
     let hashedpassword = bcrypt.hashSync(password, salt);
 
     const user = await UserModel.create({
       username,
       email,
       password: hashedpassword,
-      avatar
     });
-    res.json({ success: "true", user });
+
+    const { password: userPassword, ...rest } = user._doc;
+    res.json({ success: "true", user:rest });
   } catch (error) {
     next(error);
   }

@@ -6,11 +6,11 @@ const app = express();
 const {connectDB} =  require("./utils/db");
 const { notFoundError } = require("./middlewares/CustomError");
 require("dotenv").config()
-
+const cors = require('cors')
 // Bodyparser middleware
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
+app.use(cors())
 // DB Config
 connectDB();
 
