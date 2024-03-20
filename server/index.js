@@ -1,32 +1,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const users = require("./routes/userRoutes");
+const userRoutes = require("./routes/userRoutes");
 const app = express();
+const {connectDB} =  require("./utils/db");
+const { notFoundError } = require("./middlewares/CustomError");
 require("dotenv").config()
+
 // Bodyparser middleware
-app.use(
-  bodyParser.urlencoded({
-    extended: false
-  })
-);
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // DB Config
-const db =process.env.MONGOURI;
-
-// Connect to MongoDB
-mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log("MongoDB successfully connected"))
-  .catch(err => console.log(err));
-
+connectDB();
 
 // Routes
-app.use("/api/users", users);
+app.use("/api/", userRoutes);
+
+
+app.use(notFoundError)
 
 const port = process.env.PORT || 5000;
 
