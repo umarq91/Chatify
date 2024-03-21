@@ -3,12 +3,14 @@
 interface SearchedUsersProps {
     profile: string,
     name: string,
-    email:string
+    email:string,
+    handleAddUser:any
 }
-export const SearchedUsers = ({profile,name,email}:SearchedUsersProps) => {
+export const SearchedUsers = ({profile,name,email,handleAddUser}:SearchedUsersProps) => {
   return (
     <div 
-    className="h-16  w-full  hover:bg-[#272A30] cursor-pointer bg-[#17191C] text-white rounded-3xl transition-all">
+    onClick={handleAddUser}
+    className="h-16 -mt-3  w-full  hover:bg-[#272A30] cursor-pointer bg-[#17191C] text-white rounded-2xl transition-all">
       <div className="flex   justify-between items-center h-full px-4">
         <div className="flex w-full items-center gap-3">
           <img

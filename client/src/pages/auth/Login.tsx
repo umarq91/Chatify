@@ -8,7 +8,7 @@ import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
- 
+
 
 const Login = () => {
   const navigate= useNavigate()
@@ -20,17 +20,17 @@ const Login = () => {
     const handleSubmit = async () => {
     
 
-      const {data} = await axios.post("/api/register", {
-        email,
-        password,
+      const {data} = await axios.post("http://127.0.0.1:5000/api/login",{
+        email,password
       });
-
-      if(data.success==="true"){
-          localStorage.setItem('user', JSON.stringify(data.user))
+      console.log(data);
+      
+  
         
-          toast.success(`Welcome back ${data.user.username}`);
-          navigate('/chat')
-      }
+        toast.success(`Welcome back ${data.user.username}`);
+        // navigate('/chat')
+      
+      
   
   }
     
@@ -75,7 +75,9 @@ const Login = () => {
                   Show password
                 </label>
               </div>
-              <Button className="w-full space-y-4">Login</Button>
+              <Button
+              onClick={handleSubmit}
+              className="w-full space-y-4">Login</Button>
               <Button  className="w-full bg-red-900 hover:bg-red-800 space-y-4 flex">Login with Google</Button>
 
             </CardFooter>
