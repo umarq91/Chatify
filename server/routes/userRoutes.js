@@ -1,15 +1,9 @@
 const express = require("express");
+const { allusers } = require("../controllers/usersController");
+const authenticateToken = require("../middlewares/TokenVerification");
 const router = express.Router();
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-
-// Load User model
-const User = require("../models/User");
-const { signIn, signUp } = require("../controllers/authControllers");
 
 
-router.post("/register",signUp);
+router.get('/',allusers)
 
-router.post("/login",signIn)
-
-module.exports = router;
+module.exports = router

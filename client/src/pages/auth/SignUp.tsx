@@ -27,17 +27,15 @@ const SignUp = () => {
         return;
       }
 
-      const {data} = await axios.post("/api/register", {
+      const {data} = await axios.post("/api/auth/register", {
         username,
         email,
         password,
       });
 
       if(data.success==="true"){
-          localStorage.setItem('user', JSON.stringify(data.user))
-        
           toast.success("Account has been created successfully!");
-          navigate('/chat')
+     
       }
   
   }

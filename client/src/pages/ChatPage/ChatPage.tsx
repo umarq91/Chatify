@@ -69,7 +69,7 @@ const ChatPage = () => {
 
   return (
     <div className="flex">
-
+ 
       {/*  Left side */}
                 <div className="hidden md:block lg:w-[30%] xl:w-[25%] bg-[#17191C] h-screen text-white">
                   {/* Search */}

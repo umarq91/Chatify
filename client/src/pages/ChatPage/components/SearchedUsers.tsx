@@ -1,12 +1,12 @@
 
 
 interface SearchedUsersProps {
-    profile: string,
-    name: string,
+    avatar: string,
+    username: string,
     email:string,
     handleAddUser:any
 }
-export const SearchedUsers = ({profile,name,email,handleAddUser}:SearchedUsersProps) => {
+export const SearchedUsers = ({avatar,username,email,handleAddUser}:SearchedUsersProps) => {
   return (
     <div 
     onClick={handleAddUser}
@@ -14,11 +14,11 @@ export const SearchedUsers = ({profile,name,email,handleAddUser}:SearchedUsersPr
       <div className="flex   justify-between items-center h-full px-4">
         <div className="flex w-full items-center gap-3">
           <img
-            src={profile}
+            src={avatar}
             className="w-12 h-12 object-cover rounded-full"
             />
             <div className="flex w-full flex-col">
-            <h2 className="text-lg"> {name}</h2>
+            <h2 className="text-lg"> {username}</h2>
             <p className={`text-xs w-[80%] tracking-wide truncate line-clamp-1 '}`}>{email}</p>
             </div>
             </div>

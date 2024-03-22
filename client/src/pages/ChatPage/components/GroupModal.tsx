@@ -10,37 +10,45 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FaPlus } from "react-icons/fa6"
 import { SearchedUsers } from "./SearchedUsers"
 import { toast } from "sonner"
 import UserBadge from "./UserBadge"
+import axios from "axios"
 
-const data= [
-  { profile:"https://a.storyblok.com/f/191576/1200x800/faa88c639f/round_profil_picture_before_.webp",
-  name:"Umar Qureshi",
-  lastMessage:"Hello world how are you what have you been ",
-  time:"9:40PM",
-  email:"editorumer@mgail.com",
-  active:true},
-  { profile:"https://a.storyblok.com/f/191576/1200x800/faa88c639f/round_profil_picture_before_.webp",
-  name:"Umar hayat",
-  lastMessage:"Hello world how are you what have you been ",
-  time:"9:40PM",
-  email:"editorumer@mgail.com",
-  active:false},
-  
-  
-  
-]
+
 export function GroupModal() {
 
   const [groupChatName,setGroupChatName] = useState('')
   const [searchResults,setSearchResults] = useState([])
   const [selectedUsers,setSelectedUsers] = useState<any[]>([])
-  const [searchInput,setSearchInput] = useState('')
+  const [searchQuery,setSearchQuery] = useState('')
 
   // append with the chats ( Side bar chats )
+
+ useEffect(() => {
+    const fetchData = async () => {
+      if (searchQuery.length > 1) {
+        try {
+          const { data } = await axios.get(`api/user?search=${searchQuery}`);
+          setSearchResults(data);
+        } catch (error) {
+          console.error("Error fetching users:", error);
+          // Handle errors gracefully, e.g., display an error message
+        }
+      } else {
+        setSearchResults([]);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      // Cleanup function to cancel any pending requests on unmount
+     axios.Cancel
+    }; // Add a dependency array to avoid infinite loops:
+  }, [searchQuery]);
 
 
 
@@ -88,7 +96,9 @@ export function GroupModal() {
 
           <div className=" items-center gap-4">
             <Input
-              id="username"
+              id="search"
+              value={searchQuery}
+              onChange={(e)=>setSearchQuery(e.target.value)}
               placeholder="Add Users email eg abc@gmail.com"
             />
           </div>
@@ -107,11 +117,11 @@ export function GroupModal() {
         </div>
 
         {/* Rendering Searched Users */}
-        {data.map((user) => (
+        {searchResults.slice(0, 3).map((user:any) => (
           <SearchedUsers
             handleAddUser={() => handleSelectUser(user)}
-            profile={user.profile}
-            name={user.name}
+            avatar={user.avatar}
+            username={user.username}
             email={user.email}
           />
         ))}

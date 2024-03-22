@@ -5,6 +5,8 @@ import ChatPage from "./pages/ChatPage/ChatPage.tsx";
 import axios from "axios";
 import { Toaster } from "@/components/ui/sonner";
 import { ChatProvider } from "./context/ChatContext.tsx";
+import  UserProvider  from "./context/userContext.tsx";
+
 
 function App() {
   axios.defaults.baseURL = "http://127.0.0.1:5000";
@@ -15,6 +17,8 @@ function App() {
       <div className="h-screen overflow-hidden">
         <Toaster />
         <BrowserRouter>
+        <UserProvider>
+
           <ChatProvider>
             <Navbar />
             <Routes>
@@ -22,6 +26,7 @@ function App() {
               <Route path="/chat" element={<ChatPage />} />
             </Routes>
           </ChatProvider>
+        </UserProvider>
         </BrowserRouter>
       </div>
     </>

@@ -3,7 +3,7 @@ const UserModel = require('../models/User')
 
 const allusers = asyncHandler(async (req, res) => {
   const keyword = req.query.search;
-  const loggedInUserId = req.user.id;
+  // const loggedInUserId = req.user.id;
 
   const users = await UserModel.find({
     $and: [
@@ -13,7 +13,7 @@ const allusers = asyncHandler(async (req, res) => {
           { username: { $regex: keyword, $options: 'i' } }
         ]
       },
-      { _id: { $ne: loggedInUserId } } // Exclude the logged-in user
+      // { _id: { $ne: loggedInUserId } } // Exclude the logged-in user
     ]
   });
 
