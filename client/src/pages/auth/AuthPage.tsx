@@ -6,11 +6,18 @@ import {
 } from "@/components/ui/tabs"
 import SignUp from "./SignUp"
 import Login from "./Login"
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "@/context/userContext";
+import { useNavigate } from "react-router-dom";
 
 export function AuthPage() {
- 
+ const navigate = useNavigate()
+  const {user}:any =  useContext(UserContext)
 
 
+  if(user){
+   return navigate('/chat')
+  }
   return (
     <div className="h-[80vh] w-full flex justify-center items-center">
       <Tabs defaultValue="sign-in" className="w-[400px]">
@@ -29,5 +36,6 @@ export function AuthPage() {
         </TabsContent>
       </Tabs>
     </div>
+
   );
 }

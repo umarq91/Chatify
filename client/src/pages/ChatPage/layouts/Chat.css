@@ -1,18 +1,18 @@
 /* Style for scrollbar */
 div.scrollbar-thin::-webkit-scrollbar {
   width: 0.2rem; /* Initial width */
-  background-color: transparent;
+ 
 }
 
 /* Hover effect */
 div.scrollbar-thin::-webkit-scrollbar:hover {
-  width: 0.3rem; /* Increase width slightly on hover */
+  width: 0.4rem; /* Increase width slightly on hover */
 }
 
 /* Scrollbar thumb style */
 div.scrollbar-thin::-webkit-scrollbar-thumb {
   background-color: #ccc;
-  border-radius: 0.9rem;
+  border-radius: 2rem;
   cursor: pointer;
-  transition: width 0.3s ease; /* Smooth transition effect */
+  transition: width 0.7s ease; /* Smooth transition effect */
 }

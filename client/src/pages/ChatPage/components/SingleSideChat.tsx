@@ -10,7 +10,8 @@ interface SideChatProps{
 }
 
 const SideSingleChat = ({profile,name,lastMessage,time,active}:SideChatProps) => {
-
+  const   {setSelectChat}:any = useContext(chatContext);
+  
 
   const truncateText = (text:string, maxWords:number) => {
     const words = text.split('');
@@ -24,7 +25,7 @@ const SideSingleChat = ({profile,name,lastMessage,time,active}:SideChatProps) =>
   // Truncate the last message to a maximum of 40 words
   const truncatedMessage = truncateText(lastMessage, 32);
 
-  const   {setSelectChat}:any = useContext(chatContext);
+
   
 const handleSelectChat = ()=>{
   // set the ID of the selected Chat ( ID from databse )
@@ -34,8 +35,8 @@ const handleSelectChat = ()=>{
   return (
     <div 
     onClick={handleSelectChat}
-    className="h-16  w-full hover:bg-[#272A30] cursor-pointer bg-[#17191C] transition-all">
-      <div className="flex   justify-between items-center h-full px-4">
+    className="h-16  w-full px-4 hover:bg-[#272A30] cursor-pointer bg-[#17191C] transition-all">
+      <div className="flex   justify-between items-center h-full ">
         <div className="flex w-full items-center gap-3">
           <img
             src={profile}

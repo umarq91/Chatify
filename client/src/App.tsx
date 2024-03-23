@@ -12,6 +12,7 @@ function App() {
   axios.defaults.baseURL = "http://127.0.0.1:5000";
   axios.defaults.withCredentials=true
 
+  
   return (
     <>
       <div className="h-screen overflow-hidden">
@@ -22,7 +23,7 @@ function App() {
           <ChatProvider>
             <Navbar />
             <Routes>
-              <Route path="/auth" element={<AuthPage />} />
+              <Route path="/" element={<AuthPage />} />
               <Route path="/chat" element={<ChatPage />} />
             </Routes>
           </ChatProvider>

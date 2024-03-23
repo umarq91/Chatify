@@ -7,32 +7,34 @@ interface UserProviderProps {
 }
 export default function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useState(null);
-  const [ready, setReady] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     if (!user) {
       const getUser = async () => {
         try {
           const response = await axios.get("/api/auth/profile");
-            console.log(response.data);
-            
+           
           if (response.status === 200) {
             const userData = response.data;
 
             setUser(userData);
-            setReady(true);
+            setLoading(false);
           }
         } catch (error) {
           // Handle errors here
           console.log("Backend Not connected properly");
         }
-      };
+      }
       getUser();
     }
+
   }, []);
 
+  
   return (
-    <UserContext.Provider value={{ user, setUser, ready }}>
+    <UserContext.Provider value={{ user, setUser,  loading }}>
       {children}
     </UserContext.Provider>
   );
