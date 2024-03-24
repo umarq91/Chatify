@@ -23,17 +23,25 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const [error,setError] = useState('')
   const handleSubmit = async () => {
-    const { data } = await axios.post("/api/auth/login", {
-      email,
-      password,
-    });
+ 
+    try {
+      const { data } = await axios.post("/api/auth/login", {
+        email,
+        password,
+      });
+  console.log(data);
+  
+      
+      if(data.success === true){
+      
+        toast.success(`Welcome back ${data.user.username}`);
+       navigate('/chat')
+      }
+    } catch (error:any) {
+      setError(error.response?.data?.message || 'Login Failed')
 
-    if(data.success === true){
-    
-      toast.success(`Welcome back ${data.user.username}`);
-     navigate('/chat')
     }
   };
 
@@ -51,7 +59,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               id="email"
-              placeholder="Johndoe@gmail.com"
+              placeholder="Enter your email"
             />
           </div>
           <div className="space-y-1">
@@ -60,11 +68,12 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               id="password"
+              placeholder="Enter your password"
               type={showPassword ? "text" : "password"}
             />
           </div>
+ {error && <div className="text-red-500 font-bold">{error}</div>}
         </CardContent>
-
         <CardFooter className="flex flex-col space-y-4">
           <div className="flex space-x-2 ml-1 justify-start  w-full">
             <Checkbox

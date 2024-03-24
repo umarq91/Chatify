@@ -13,7 +13,7 @@ const signUp = async (req, res, next) => {
     
     if (existingUser.length>0) {
       // If the email already exists, return an error response to the frontend
-      return res.status(400).json({ error: "Email already exists" });
+      return next(customError(404, 'Email already exists'));
     }
 
     let hashedpassword = bcrypt.hashSync(password, salt);
@@ -38,7 +38,7 @@ const signIn = async (req, res, next) => {
     if (!validUser) return next(customError(404, 'User not found'));
 
     const validPassword = bcrypt.compareSync(password, validUser.password);
-    if (!validPassword) return next(customError(401, 'wrong credentials'));
+    if (!validPassword) return next(customError(401, 'wrong password'));
     
     const { password: hashedPassword, ...rest } = validUser._doc;
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET, {
@@ -59,7 +59,6 @@ const signIn = async (req, res, next) => {
 
 
 const userVerification = (req, res) => {
-  console.log("test");
   const { token } = req.cookies;
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, {}, async (err, usertoken) => {
@@ -73,6 +72,11 @@ const userVerification = (req, res) => {
   }
 };
 
+const userLogout=(req,res)=>{
+  res
+    .clearCookie("token", { secure: true, httpOnly: true, sameSite: "none" })
+    .json({ message: "Cookies Cleared Successfully" });
+}
 
 
-module.exports = { signIn, signUp,userVerification };
+module.exports = { signIn, signUp,userVerification ,userLogout};

@@ -74,10 +74,14 @@ const {user,loading}:any = useContext(UserContext)
 
 
 
-if (!user) {
-  window.location.href = '/';
-  return null; // Add this return statement
+if(loading){
+  return <div className=" text-center ">Loading...</div>
 }
+
+if(!user && !loading){
+navigate('/')
+}
+
 
   // Function to handle search
   const handleSearch = (e:React.ChangeEvent<HTMLInputElement>) => {

@@ -20,24 +20,33 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
+  const [error,setError] = useState('')
   const handleSubmit = async () => {
-      if (password !== confirmPassword) {
-        toast.error("Passwords do not match");
-        return;
-      }
+    try {
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
 
-      const {data} = await axios.post("/api/auth/register", {
-        username,
-        email,
-        password,
-      });
+    const {data} = await axios.post("/api/auth/register", {
+      username,
+      email,
+      password,
+    });
 
-      if(data.success==="true"){
-          toast.success("Account has been created successfully!");
-     
-      }
-  
+    if(data.success==="true"){
+      
+        toast.success("Account has been created successfully!");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword('')
+      setUsername('')
+      setError('')
+    }
+    
+  } catch (error:any) {
+    setError( error.response?.data?.message ||"An error occurred while creating the account");
+  }
   }
 
   return (
@@ -91,7 +100,7 @@ const SignUp = () => {
             />
           </div>
 
-
+          {error && <div className="text-red-500 font-bold">{error}</div>}
       </CardContent>
 
       <CardFooter>
