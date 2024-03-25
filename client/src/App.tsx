@@ -7,7 +7,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { ChatProvider } from "./context/ChatContext.tsx";
 import  UserProvider  from "./context/userContext.tsx";
 
-
 function App() {
   axios.defaults.baseURL = "http://127.0.0.1:5000";
   axios.defaults.withCredentials=true
@@ -24,6 +23,7 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<AuthPage />} />
+       
               <Route path="/chat" element={<ChatPage />} />
             </Routes>
           </ChatProvider>

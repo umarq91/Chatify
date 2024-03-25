@@ -32,6 +32,7 @@ const signUp = async (req, res, next) => {
 };
 
 const signIn = async (req, res, next) => {
+  console.log("Logged");
   const { email, password } = req.body;
   try {
     const validUser = await UserModel.findOne({ email });

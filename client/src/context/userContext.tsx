@@ -14,6 +14,7 @@ export default function UserProvider({ children }: UserProviderProps) {
     if (!user) {
       const getUser = async () => {
         try {
+          setLoading(true)
           const response = await axios.get("/api/auth/profile");
            
           if (response.status === 200) {

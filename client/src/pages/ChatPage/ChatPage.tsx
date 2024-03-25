@@ -1,6 +1,6 @@
 import { CiSearch } from "react-icons/ci";
 import { Chats } from './layouts/Chats';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { chatContext } from "@/context/ChatContext";
 import { GroupModal } from "./components/GroupModal";
 import { CiChat1 } from "react-icons/ci";
@@ -73,11 +73,19 @@ const ChatPage = () => {
 const {user,loading}:any = useContext(UserContext)
 
 
-
-if (!user) {
-  window.location.href = '/';
-  return null; // Add this return statement
+if(loading){
+return <div className="h-screen w-full flex justify-center items-center bg-[#17191C]"> 
+  Loading
+   </div>
 }
+
+useEffect(() => {
+  // Check if user is not available, then navigate to "/"
+  if (!user && !loading) {
+    navigate("/");
+  }
+}, [user, loading, navigate]);
+
 
   // Function to handle search
   const handleSearch = (e:React.ChangeEvent<HTMLInputElement>) => {
