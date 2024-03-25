@@ -1,9 +1,13 @@
-export const accessChat = asyncHandler(async (req, res) => {
+const UserModel = require("../models/User.js");
+const { customError } = require("../utils/CustomError.js");
+const Chat = require("../models/ChatModel.js");
+const asyncHandler = require("express-async-handler");
+ const accessChat = asyncHandler(async (req, res) => {
     const { userId } = req.body;
 
     if(!userId) {
         console.log("UserId param not sent with request");
-        return res.sendStatus(400);
+        return next(customError(400, "User Id not sent with request"));
     }
 
     let isChat = await Chat.find({
@@ -16,9 +20,9 @@ export const accessChat = asyncHandler(async (req, res) => {
         .populate("users", "-password")
             .populate("latestMessage");
 
-        isChat = await User.populate(isChat, {
+        isChat = await UserModel.populate(isChat, {
             path:'latestMessage.sender',
-            select:"name pic email",
+            select:"username avatar email",
         });
 
         if (isChat.length > 0){
@@ -45,3 +49,21 @@ export const accessChat = asyncHandler(async (req, res) => {
             }
         }
 });
+
+const fetchChats = asyncHandler(async (req, res) => {
+    
+    Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+        .populate("users", "-password")
+        .populate("groupAdmin", "-password")
+        .populate("latestMessage")
+        .sort({ updatedAt: -1 })
+        .then(async(results)=>{
+            results = await UserModel.populate(results, {
+               path:"latestMessage.sender",
+               select:"username avatar email", 
+            })
+            res.status(200).send(results);
+        })
+})
+
+module.exports=  {accessChat,fetchChats}

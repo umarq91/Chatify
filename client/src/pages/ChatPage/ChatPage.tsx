@@ -72,20 +72,14 @@ const ChatPage = () => {
   const { selectedChat ,setSelectChat}: any = useContext(chatContext);
 const {user,loading}:any = useContext(UserContext)
 
-
 if(loading){
-return <div className="h-screen w-full flex justify-center items-center bg-[#17191C]"> 
-  Loading
-   </div>
+  return <div>Loading...</div>
 }
 
-useEffect(() => {
-  // Check if user is not available, then navigate to "/"
-  if (!user && !loading) {
-    navigate("/");
-  }
-}, [user, loading, navigate]);
-
+if (!user) {
+  navigate('/')
+  return null; // Add this return statement
+}
 
   // Function to handle search
   const handleSearch = (e:React.ChangeEvent<HTMLInputElement>) => {

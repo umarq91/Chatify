@@ -1,5 +1,5 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import { AuthPage } from "./pages/auth/AuthPage.tsx";
+import  AuthPage  from "./pages/auth/AuthPage.tsx";
 import Navbar from "./components/layout/Navbar.tsx";
 import ChatPage from "./pages/ChatPage/ChatPage.tsx";
 import axios from "axios";

@@ -1,4 +1,4 @@
-const mongoose = requuire("mongoose")
+const mongoose = require("mongoose")
 
 const ChatModelSchema = mongoose.Schema({
     chatName : {
@@ -22,10 +22,10 @@ const ChatModelSchema = mongoose.Schema({
         ref: "User"
     }
 },
-{ timeStamps: true }
+{ timestamps: true }
 
 )
 
-const Chat = monogoose.model("Chat", ChatModelSchema)
+const Chat = mongoose.model("Chat", ChatModelSchema)
 
 module.exports= Chat
