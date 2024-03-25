@@ -9,11 +9,11 @@ export const chatContext = createContext({});
 
 export const ChatProvider = ({ children }:ChatProps) => {
 
-    const [selectedChat,setSelectChat] = useState(null)
+    const [selectedChat,setSelectedChat] = useState(null)
 
 
     return(
-        <chatContext.Provider value={{selectedChat,setSelectChat}}>
+        <chatContext.Provider value={{selectedChat,setSelectedChat}}>
             {children}
             </chatContext.Provider>
     )

@@ -31,8 +31,7 @@ const Login = () => {
         email,
         password,
       });
-  console.log(data);
-  
+
       
       if(data.success === true){
       

@@ -1,28 +1,15 @@
-import { useContext, useState } from "react";
 import SideSingleChat from "../components/SingleSideChat";
 import { SkeletonDemo } from "../components/Skeleton";
-import { chatContext } from "@/context/ChatContext";
 import { CiChat1 } from "react-icons/ci";
-import "./Chat.css"
+import "./Chat.css" 
 interface ChatProps {
   data: any[];
   loading: boolean;
 }
 
 export const Chats = ({ data, loading }: ChatProps) => {
-  const [chatSelect, setchatSelect] = useState(null);
 
-
-  const customScrollbarStyle = {
-    "::-webkit-scrollbar": {
-      width: "0.5rem",
-      backgroundColor: "transparent",
-    },
-    "::-webkit-scrollbar-thumb": {
-      backgroundColor: "#ccc",
-      borderRadius: "0.5rem",
-    },
-  };
+  
   return (
     <div  className="scrollbar-thin overflow-y-auto h-[80%] " >
       {data.length == 0 && (
@@ -47,12 +34,9 @@ export const Chats = ({ data, loading }: ChatProps) => {
         data.map((chat, index) => (
           <SideSingleChat
             key={index}
-            profile={chat.profile}
-            lastMessage={chat.lastMessage}
-            active={chat.active}
-            name={chat.name}
-            time={chat.time}
+            chat={chat}
           />
+     
         ))
       )}
     </div>

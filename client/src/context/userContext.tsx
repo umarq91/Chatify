@@ -19,13 +19,15 @@ export default function UserProvider({ children }: UserProviderProps) {
            
           if (response.status === 200) {
             const userData = response.data;
-
+       
+            
             setUser(userData);
             setLoading(false);
           }
         } catch (error) {
           // Handle errors here
-          console.log("Backend Not connected properly");
+          setLoading(false);
+          console.log("Backend Not connected properly or user not logged in");
         }
       }
       getUser();
