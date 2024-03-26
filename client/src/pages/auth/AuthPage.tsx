@@ -18,6 +18,7 @@ export default function AuthPage() {
   if(user){
    return navigate('/chat')
   }
+  
   return (
     <div className="h-[80vh] w-full flex justify-center items-center">
       <Tabs defaultValue="sign-in" className="w-[400px]">

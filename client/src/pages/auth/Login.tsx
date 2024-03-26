@@ -36,7 +36,7 @@ const Login = () => {
       if(data.success === true){
       
         toast.success(`Welcome back ${data.user.username}`);
-       navigate('/chat')
+         window.location.href="/"
       }
     } catch (error:any) {
       setError(error.response?.data?.message || 'Login Failed')

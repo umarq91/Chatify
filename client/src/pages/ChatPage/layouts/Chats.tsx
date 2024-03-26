@@ -7,12 +7,11 @@ interface ChatProps {
   loading: boolean;
 }
 
-export const Chats = ({ data, loading }: ChatProps) => {
+export const Chats = ({ data,loading }: ChatProps) => {
 
-  
   return (
     <div  className="scrollbar-thin overflow-y-auto h-[80%] " >
-      {data.length == 0 && (
+      {data.length == 0 && !loading && (
         <div className="flex flex-col mt-40 justify-center items-center opacity-60">
           <CiChat1 className="text-[4rem]" />
           <h1 className="text-lg">No chats</h1>

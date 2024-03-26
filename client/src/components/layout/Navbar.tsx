@@ -7,7 +7,7 @@ const Navbar = () => {
   try {
     
     const res = await axios.get("/api/auth/logout")
-    
+      window.location.reload()
     if(res.status==200){
       window.location.href="/"
     }
