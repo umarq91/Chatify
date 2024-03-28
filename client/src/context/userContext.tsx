@@ -42,3 +42,6 @@ export default function UserProvider({ children }: UserProviderProps) {
     </UserContext.Provider>
   );
 }
+
+
+export const useUser = () => React.useContext(UserContext)

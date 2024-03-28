@@ -41,7 +41,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value.toLowerCase();
     setSearch(searchTerm);
-    if (searchTerm.trim() === '') {
+    if (searchTerm.trim() === '' || searchTerm.length < 2) {
       setChatResults(originalChatResults);
     } else {
       const filteredResults = originalChatResults.filter((chat: Chat) =>
@@ -75,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
     </div>
     <GroupModal />
 
-    {/* side chat */}
+    {/* Chats */}
     <div className="mt-3 h-screen">
       <Chats data={chatResults} loading={loading} />
     </div>

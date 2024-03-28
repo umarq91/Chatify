@@ -23,6 +23,7 @@ const SideSingleChat = ({ chat }: SideChatProps) => {
 
   const handleSelectChat = () => {
     setSelectedChat(chat); // Set the selected chat ID
+    
   };
 
   const getAvatar = () => {

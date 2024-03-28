@@ -24,9 +24,7 @@ const ChatPage = () => {
 
   return (
     <div className="flex ">
-      {/*  Left side */}
     <Sidebar selectedChat={selectedChat}/>
-      {/* Right Side */}
     <RightSide selectedChat={selectedChat} setSelectedChat={setSelectedChat}/>
     </div>
   );

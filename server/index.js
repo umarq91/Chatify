@@ -1,9 +1,10 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes")
+const messageRoutes = require("./routes/messageRoutes")
+
 const app = express();
 const cookieParser = require('cookie-parser')
 const {connectDB} =  require("./utils/db");
@@ -31,20 +32,19 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use('/api/chat',chatRoutes)
 
-app.get("/api/test",authenticateToken, allusers)
+app.use("/api/message",messageRoutes)
 
-app.use((err,req,res,next)=>{
 
+app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 501;
-  const message = err.message || 'Internal Server Error';
+  const message = err.message || "Internal Server Error";
 
   res.status(statusCode).json({
-      success:"false",
-      message,
-      statusCode
-  })
-
-})
+    success: "false",
+    message,
+    statusCode,
+  });
+});
 
 
 const port = process.env.PORT || 5000;

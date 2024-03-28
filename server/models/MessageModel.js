@@ -1,4 +1,4 @@
-const mongoose = requuire("mongoose")
+const mongoose = require("mongoose")
 
 const MessageSchema = mongoose.Schema({
     sender : {
