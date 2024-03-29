@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken')
 const UserModel = require("../models/User.js")
 const TokenVerification = async(req,res,next)=>{
     const token =req.cookies.token
-    console.log(req.cookies);
     if(!token) return next(customError(404,"you are not authenticated!"))
 
     try {

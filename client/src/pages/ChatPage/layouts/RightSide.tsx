@@ -14,8 +14,8 @@ const RightSide = ({selectedChat, setSelectedChat}:Props) => {
 const {user}:any = useUser()
 
   return (
-    <div
-    className={`flex-1 md:block bg-[#1C1E22] h-screen overflow-y-auto text-white ${
+    <div  
+    className={`flex-1 md:block bg-[#1C1E22] h-full overflow-y-auto text-white ${
       selectedChat ? "block" : "hidden"
     }`}
   >

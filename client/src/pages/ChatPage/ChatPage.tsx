@@ -23,7 +23,7 @@ const ChatPage = () => {
 
 
   return (
-    <div className="flex ">
+    <div className="flex w-full h-full overflow-hidden">
     <Sidebar selectedChat={selectedChat}/>
     <RightSide selectedChat={selectedChat} setSelectedChat={setSelectedChat}/>
     </div>

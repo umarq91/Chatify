@@ -1,13 +1,19 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { chatContext } from '@/context/ChatContext';
+import axios from 'axios';
+import {  useState,  useContext } from 'react';
+
 
 function ChatInput() {
   const [inputMessage, setInputMessage] = useState('');
   const [error, setError] = useState('');
 
-
+const {selectedChat}:any = useContext(chatContext)
 
   const sendMessage = async (e: any) => {
     e.preventDefault();
+    setInputMessage('')
+  const res =   await axios.post('/api/message',{content:inputMessage,chatId:selectedChat._id})
+
   
 };
 
