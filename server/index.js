@@ -66,8 +66,6 @@ io.on('connection', (socket) => {
   socket.on('newmessage', async (message) => {
     const { sender, content, chat } = message;
     const { _id: chatId } = chat;
-      console.log(`Message received: ${chatId}`);
-
  
     try {
       // ... logic to save message to database (if needed)

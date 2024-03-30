@@ -4,6 +4,6 @@ const authenticateToken = require("../middlewares/TokenVerification");
 const router = express.Router();
 
 
-router.get('/',allusers)
+router.get('/',authenticateToken,allusers)
 
 module.exports = router

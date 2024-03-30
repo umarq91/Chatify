@@ -3,15 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import { GroupModal } from "@/pages/ChatPage/components/GroupModal";
 import { Chats } from '../layouts/Chats';
+import SearchUserModa from '../components/SearchUserModa';
 
 // Interface for Chat data
 interface Chat {
   users: any[];
-  chatName?: string; // Optional for group chats
-  // ... other chat properties
+  chatName?: string; 
 }
 
-// Interface for Sidebar props
 interface SidebarProps {
   selectedChat: boolean;
 }
@@ -73,6 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
         <CiSearch className="h-5 w-5 text-gray-400" />
       </div>
     </div>
+    <SearchUserModa/>
     <GroupModal />
 
     {/* Chats */}

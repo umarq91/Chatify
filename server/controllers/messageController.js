@@ -20,7 +20,7 @@ const sendMessage = asyncHandler(async (req, res) => {
       chat: chatId
     });
 
-
+console.log(newMessage);
     newMessage = await newMessage.populate("sender", "username avatar")
 
     newMessage = await MessageModel.findById(newMessage._id).populate("chat").populate('sender', 'username avatar email');

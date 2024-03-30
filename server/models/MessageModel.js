@@ -14,7 +14,7 @@ const MessageSchema = mongoose.Schema({
         ref: "Chat"
     }
 },
-{ timeStamps: true }
+{ timestamps: true }
 
 )
 

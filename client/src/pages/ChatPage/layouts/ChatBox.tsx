@@ -7,7 +7,6 @@
     import io from "socket.io-client";
 
     let socket:any;
-    let selectedChatCompare:any;
 
     function ChatBox() {
 
@@ -15,10 +14,6 @@
         const { selectedChat }: any= useContext(chatContext);
         const chatref : any= useRef(null);
         const { user }: any= useUser();
-        const [socketConntected, setSocketConnected] : any= useState(false);
-
-   
-
         useEffect(() => {
             chatref.current?.scrollIntoView({ behavior: "smooth" , block: "end" });
         },[messages]);
@@ -35,6 +30,8 @@
         useEffect(() => {
           const fetchMessage=async()=>{
               const {data} : any= await axios.get('/api/message/'+selectedChat._id)
+              console.log(data);
+              
               setMessage(data)
           }
           fetchMessage()
@@ -45,7 +42,7 @@
         });
       },[selectedChat]);
 
-        const sendMessage = async (e, msg) => {
+        const sendMessage = async (e:any, msg:any) => {
           e.preventDefault();
           const { data } = await axios.post('/api/message', { content: msg, chatId: selectedChat._id });
           // Emit to server for broadcasting
@@ -69,6 +66,7 @@
     messages={messages} // Pass the entire messages array
     index={index}
     senderId={message.sender._id}
+    time={message.createdAt}
     />
     ))}
     </div>

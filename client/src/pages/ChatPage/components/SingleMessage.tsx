@@ -1,6 +1,5 @@
 import { isLastMessageBySameSender } from "@/config/helpers";
-
-interface Props {
+import { format, render, cancel, register } from 'timeago.js';interface Props {
   content: string;
   sender: string;
   isSenderUser: boolean;
@@ -8,13 +7,14 @@ interface Props {
   messages: any[]; // Array of message objects (assuming your message structure)
   index: number; // Index of the current message in the array
   senderId: string; // ID of the current message sender
+  time:any;
 }
 
-function SingleMessage({ content, sender, isSenderUser, avatar, messages, index, senderId }:Props) {
+function SingleMessage({ content, sender, isSenderUser, avatar, messages, index, senderId,time }:Props) {
 
 
+  
   const showAvatar = isLastMessageBySameSender(messages, index, senderId);
-console.log(showAvatar);
 
   return (
     <div className="grid grid-cols-12 gap-y-2">
@@ -34,7 +34,8 @@ console.log(showAvatar);
       <div
           className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
       >
-        <div>{content}</div>
+        <h2 className="text-md">{content}</h2>
+        <p className="text-xs">{format(time)}</p>
       </div>
  </div>
 </div>
@@ -55,6 +56,7 @@ console.log(showAvatar);
               className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl"
           >
             <div>{content}</div>
+            <p className="text-xs">{format(time)}</p>
           </div>
         </div>
       </div>
