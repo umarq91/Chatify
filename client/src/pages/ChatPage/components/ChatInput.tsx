@@ -2,25 +2,22 @@ import { chatContext } from '@/context/ChatContext';
 import axios from 'axios';
 import {  useState,  useContext } from 'react';
 
-
-function ChatInput() {
+interface ChatInputProps {
+  sendMessage: (e: any,msg:string) => void;
+}
+function ChatInput({ sendMessage }: ChatInputProps) {
   const [inputMessage, setInputMessage] = useState('');
   const [error, setError] = useState('');
 
 const {selectedChat}:any = useContext(chatContext)
 
-  const sendMessage = async (e: any) => {
-    e.preventDefault();
-    setInputMessage('')
-  const res =   await axios.post('/api/message',{content:inputMessage,chatId:selectedChat._id})
-
-  
-};
+ 
 
 
   const handleKeyPress = (e:any) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      sendMessage(e);
+      sendMessage(e,inputMessage);
+      setInputMessage('')
     }
   };
 
@@ -38,11 +35,6 @@ const {selectedChat}:any = useContext(chatContext)
   style={{ whiteSpace: 'pre-wrap' }}
 />
 
-
-        <button
-          type="submit"
-          onClick={sendMessage}
-          style={{ display: "none" }}> SEND </button>
       </form>
       {error && <p className="error">{error}</p>}
     </div>

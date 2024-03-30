@@ -23,13 +23,13 @@ const sendMessage = asyncHandler(async (req, res) => {
 
     newMessage = await newMessage.populate("sender", "username avatar")
 
-    newMessage = await MessageModel.findById(newMessage._id).populate("chat")
+    newMessage = await MessageModel.findById(newMessage._id).populate("chat").populate('sender', 'username avatar email');
 
     newMessage = await UserModel.populate(newMessage, {
       path: "chat.users",
       select: "username avatar email"
     });
-
+console.log(newMessage);
     // Update latest message in the associated chat
     await ChatModel.findByIdAndUpdate(chatId, { latestMessage: newMessage });
 
@@ -46,7 +46,7 @@ const fetchMessages = asyncHandler(async (req, res) => {
 
   try {
     const messages = await MessageModel.find({ chat: chatId })
-      .populate("sender", "username avatar email")
+      .populate("sender")
       .populate("chat");
     res.json(messages);
   } catch (error) {

@@ -5,15 +5,13 @@
         return senderId
 
 }
-
-export function isLastMessageBySameSender(messages:any[], index:number, senderId:string  ) {
-    if (index === messages.length-1 || index ==0) {
-        return true;
+export function isLastMessageBySameSender(messages: any[], index: number, senderId: string) {
+    if (messages.length === 1||index===0) { // Only one message, always show avatar
+      return true;
     }
-    if(messages[index-1].sender._id === senderId ) return false
-    
-
-    const nextMessageSender = messages[index + 1].sender._id;
-    return nextMessageSender !== senderId;
-  }
   
+    const previousMessage = messages[index - 1];
+  
+    // Check if there's a previous message and the senders are different
+    return previousMessage && previousMessage.sender._id !== senderId;
+  }

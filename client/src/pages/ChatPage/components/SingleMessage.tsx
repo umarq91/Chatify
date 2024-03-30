@@ -11,9 +11,10 @@ interface Props {
 }
 
 function SingleMessage({ content, sender, isSenderUser, avatar, messages, index, senderId }:Props) {
-console.log(isSenderUser);
+
 
   const showAvatar = isLastMessageBySameSender(messages, index, senderId);
+console.log(showAvatar);
 
   return (
     <div className="grid grid-cols-12 gap-y-2">
@@ -42,7 +43,7 @@ console.log(isSenderUser);
         <div className="col-start-6 col-end-13 p-3 rounded-lg">
         <div className="flex items-center justify-start flex-row-reverse">
         <div className="left w-10 justify-end">
-    {showAvatar && (
+    {showAvatar && avatar &&(
       <img 
       src={avatar}
       alt="picture"
