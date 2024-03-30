@@ -9,7 +9,6 @@
     let socket:any;
 
     function ChatBox() {
-
         const [messages, setMessage] : any= useState([]);
         const { selectedChat }: any= useContext(chatContext);
         const chatref : any= useRef(null);

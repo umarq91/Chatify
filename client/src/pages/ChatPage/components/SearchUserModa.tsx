@@ -14,8 +14,10 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 
-const SearchUserModal = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+interface Props{
+    fetch:(data:any)=>void
+}
+const SearchUserModal = ({fetch}:Props) => {
   const [inputValue, setInputValue] = useState('');
   const [searchedUsers, setSearchedUsers]: any = useState(null);
   const { setSelectedChat }: any = useContext(chatContext);
@@ -24,8 +26,11 @@ const SearchUserModal = () => {
   const handleSearch = () => {
     try {
       axios
-        .get("/api/user?search=" + searchQuery)
-        .then((res) => setSearchedUsers(res.data));
+        .get("/api/user?search="+inputValue)
+        .then((res) => {setSearchedUsers(res.data)
+        console.log(res.data);
+        
+        });
     } catch (error) {
       console.log(error);
     }
@@ -33,8 +38,10 @@ const SearchUserModal = () => {
 
   const handleClick = async () => {
     const { data } = await axios.post('/api/chat', { userId: searchedUsers._id });
+  
     setSelectedChat(data);
     setModalOpen(false); // Close the modal after selecting chat
+    fetch(data)
   };
 
   useEffect(() => {
@@ -44,7 +51,7 @@ const SearchUserModal = () => {
 
   return (
     <>
-      <Dialog open={modalOpen} onDismiss={() => setModalOpen(false)}>
+      <Dialog open={modalOpen}>
         <DialogTrigger asChild onClick={() => setModalOpen(true)}>
           <button className="border-2 flex justify-center items-center gap-2 opacity-60 hover:opacity-100 transition-all border-[#272A30] my-1 py-2 self-center  rounded-3xl bg-opacity-0 w-full">
             <FaPlus />

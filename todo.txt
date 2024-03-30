@@ -2,3 +2,6 @@
 // debug the error handling in controllers
 // Make a search bar in Header to text those who aren't already chatting with the person
 // fix the loading issue in All pages ..
+
+
+// when i start a new Chat, im bouncing a function back and adding new chat in my sidechats manually, consider doing it with socket

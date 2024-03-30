@@ -54,9 +54,20 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
       }, 500);
     }
   };
+
+
+  const handleAddChat = (data: any) => {
+    // Check if the chat already exists in chatResults
+    const chatExists = chatResults.some((chat:any) => chat._id === data.id);
+  
+    // If the chat doesn't already exist, add it to chatResults
+    if (!chatExists) {
+      setChatResults([...chatResults, data]);
+    }
+  };
   return (
     <div
-    className={` md:w-[40%] lg:w-[30%] xl:w-[23%] w-full bg-[#17191C] h-screen text-white md:block ${
+    className={` md:w-[40%] lg:w-[30%] xl:w-[25%] w-full bg-[#17191C] h-screen text-white md:block px-2 ${
       selectedChat ? "hidden" : "block"
     }`}
   >
@@ -72,7 +83,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
         <CiSearch className="h-5 w-5 text-gray-400" />
       </div>
     </div>
-    <SearchUserModa/>
+    <SearchUserModa fetch={handleAddChat}/>
     <GroupModal />
 
     {/* Chats */}

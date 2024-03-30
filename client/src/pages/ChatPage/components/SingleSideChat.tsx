@@ -8,7 +8,7 @@ interface SideChatProps {
 }
 
 const SideSingleChat = ({ chat }: SideChatProps) => {
-  const { setSelectedChat }:any = useContext(chatContext);
+  const {selectedChat, setSelectedChat }:any = useContext(chatContext);
   const { user }:any = useContext(UserContext);
   const truncateText = (text: string, maxWords: number) => {
     const words = text.split(" ");
@@ -20,7 +20,7 @@ const SideSingleChat = ({ chat }: SideChatProps) => {
 
   
   // Truncate the last message to a maximum of 32 words
-  const truncatedMessage = truncateText(chat?.latestMessage.content || "", 32); // Handle missing lastMessage
+  const truncatedMessage = truncateText(chat?.latestMessage?.content || "", 32); // Handle missing lastMessage
 
   const handleSelectChat = () => {
     setSelectedChat(chat); // Set the selected chat ID
@@ -47,7 +47,7 @@ const SideSingleChat = ({ chat }: SideChatProps) => {
   return (
     <div
       onClick={handleSelectChat}
-      className=" w-full  hover:bg-[#272A30] cursor-pointer bg-[#17191C] transition-all"
+      className={` w-full my-2 py-3 hover:bg-[#272A30] cursor-pointer bg-[#17191C] rounded-lg transition-all ${selectedChat?._id === chat._id ? "bg-[#272A30]" : "bg-[#17191C] "} `}
     >
       <div className="flex justify-between items-center h-full w-full  px-1">
         <div className="flex w-full items-center gap-3">

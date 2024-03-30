@@ -27,6 +27,7 @@ const {selectedChat}:any = useContext(chatContext)
 
       <textarea
   value={inputMessage}
+  autoFocus
   onChange={(e) => setInputMessage(e.target.value)}
   onPaste={(e) => setInputMessage(e.clipboardData.getData('text'))}
   onKeyPress={handleKeyPress}

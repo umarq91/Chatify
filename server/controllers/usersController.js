@@ -4,21 +4,27 @@ const UserModel = require('../models/User');
 const allusers = asyncHandler(async (req, res) => {
   const keyword = req.query.search;
   const loggedInUserId = req.user.id;
-console.log(loggedInUserId,keyword);
+
+  console.log("KeyWorkd " + keyword);
   const users = await UserModel.find({
     $and: [
       {
         $or: [
-          { email: { $regex: keyword, $options: 'i' } },
-          { username: { $regex: keyword, $options: 'i' } }
+          { email: { $eq: keyword }},
+          { username: { $eq: keyword}}
         ]
       },
       { _id: { $ne: loggedInUserId } } // Exclude the logged-in user
     ]
   });
+  console.log(users);
 
   if (users.length === 0) {
     return res.json({ message: 'No users found' });
+  }
+
+  if (users.length > 1) {
+    return res.status(400).json({ message: 'Multiple users found. Please refine your search.' });
   }
 
   const { password, ...rest } = users[0]._doc;
