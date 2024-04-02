@@ -5,3 +5,5 @@
 
 
 // when i start a new Chat, im bouncing a function back and adding new chat in my sidechats manually, consider doing it with socket
+
+// FIX GROUP MODAL , users are not adding !

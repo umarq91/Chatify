@@ -1,27 +1,30 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { CiSearch } from "react-icons/ci";
-import { GroupModal } from "@/pages/ChatPage/components/GroupModal";
-import { Chats } from '../layouts/Chats';
-import SearchUserModa from '../components/SearchUserModa';
-
-// Interface for Chat data
-interface Chat {
-  users: any[];
-  chatName?: string; 
-}
+import React, { useContext, useEffect, useState } from 'react';
+import { CiChat1, CiSearch } from "react-icons/ci";
+import { SkeletonDemo } from '../components/Skeleton';
+import SideSingleChat from '../components/SingleSideChat';
+import { chatContext, useChatContext } from '@/context/ChatContext';
+import TopBar from '../components/TopBar';
 
 interface SidebarProps {
   selectedChat: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
-  const [search, setSearch] = useState(''); // String for search term
-  const [chatResults, setChatResults] = useState<Chat[]>([]); // Array of Chat objects
-  const [originalChatResults, setOriginalChatResults] = useState<Chat[]>([]); // Original chat data copy
-  const [loading, setLoading] = useState(false); // Boolean for loading state
 
-  const fetchData = async () => {
+interface Chat {
+  users: any[];
+  chatName?: string; 
+}
+
+
+const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
+  const [search, setSearch] = useState(''); 
+ const {chatResults,setChatResults}:any = useContext(chatContext);
+  const [originalChatResults, setOriginalChatResults] = useState<Chat[]>([]); 
+  const [loading, setLoading] = useState(false); 
+
+
+  const fetchChats = async () => {
     try {
       setLoading(true);
       const { data } = await axios.get<Chat[]>("/api/chat"); // Specify expected data type (array of Chat)
@@ -33,9 +36,12 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
     }
   };
 
+
   useEffect(() => {
-    fetchData();
+    fetchChats();
   }, []);
+
+
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -65,13 +71,15 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
       setChatResults([...chatResults, data]);
     }
   };
+
+
   return (
     <div
     className={` md:w-[40%] lg:w-[30%] xl:w-[25%] w-full bg-[#17191C] h-screen text-white md:block px-2 ${
-      selectedChat ? "hidden" : "block"
-    }`}
-  >
-    {/* Search */}
+      selectedChat ? "hidden" : "block"}`}>
+
+<TopBar hanldeAddChat={handleAddChat}/>
+                   {/* Search */}
     <div className="relative mt-2">
       <input
         value={search}
@@ -83,12 +91,40 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
         <CiSearch className="h-5 w-5 text-gray-400" />
       </div>
     </div>
-    <SearchUserModa fetch={handleAddChat}/>
-    <GroupModal />
+  
+
 
     {/* Chats */}
     <div className="mt-3 h-screen">
-      <Chats data={chatResults} loading={loading} />
+    <div  className="scrollbar-thin overflow-y-auto h-[80%] " >
+      {chatResults.length == 0 && !loading && (
+        <div className="flex flex-col mt-40 justify-center items-center opacity-60">
+          <CiChat1 className="text-[4rem]" />
+          <h1 className="text-lg">No chats</h1>
+        </div>
+      )}
+      {loading ? (
+        <>
+          <SkeletonDemo />
+          <SkeletonDemo />
+          <SkeletonDemo />
+          <SkeletonDemo />
+          <SkeletonDemo />
+          <SkeletonDemo />
+          <SkeletonDemo />
+          <SkeletonDemo />
+          <SkeletonDemo />
+        </>
+      ) : (
+        chatResults.map((chat:any, index:number) => (
+          <SideSingleChat
+            key={index}
+            chat={chat}
+          />
+     
+        ))
+      )}
+    </div>
     </div>
   </div>
 

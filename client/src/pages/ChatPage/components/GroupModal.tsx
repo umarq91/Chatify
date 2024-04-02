@@ -8,14 +8,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
-import { FaPlus } from "react-icons/fa6"
 import { SearchedUsers } from "./SearchedUsers"
 import { toast } from "sonner"
 import UserBadge from "./UserBadge"
 import axios from "axios"
-
+import { MdGroupAdd } from "react-icons/md";
 
 export function GroupModal() {
 
@@ -30,8 +35,13 @@ export function GroupModal() {
     const fetchData = async () => {
       if (searchQuery.length > 1) {
         try {
-          const { data } = await axios.get(`api/user?search=${searchQuery}`);
-          setSearchResults(data);
+       
+            const { data } = await axios.get(`api/user?search=${searchQuery}`);
+            console.log(data);
+              
+            setSearchResults(data);
+      
+     
         } catch (error) {
           console.error("Error fetching users:", error);
           // Handle errors gracefully, e.g., display an error message
@@ -41,10 +51,14 @@ export function GroupModal() {
       }
     };
 
-    fetchData();
+  const time =   setTimeout(()=>{
+
+      fetchData();
+    },1500)
 
     return () => {
       // Cleanup function to cancel any pending requests on unmount
+      clearTimeout(time)
      axios.Cancel
     }; // Add a dependency array to avoid infinite loops:
   }, [searchQuery]);
@@ -74,11 +88,27 @@ export function GroupModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="border-2 flex justify-center items-center gap-2 opacity-60 hover:opacity-100 transition-all border-[#272A30] my-1 py-2 self-center  rounded-3xl bg-opacity-0 w-full">
-          <FaPlus />
-          New group chat
+        <div>
+
+            {/*  TRIGGER  */}
+            <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+        <button className="border-2 flex justify-center items-center gap-2 opacity-60 hover:opacity-100 transition-all border-[#272A30] my-1 py-2 self-center  rounded-3xl bg-opacity-0 w-[55px]">
+          <MdGroupAdd />
         </button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Create group</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+
+        </div>
       </DialogTrigger>
+
+
+                   {/* Content  */}
       <DialogContent className=" sm:max-w-[425px] ">
         <DialogHeader>
           <DialogTitle>Create a group</DialogTitle>
@@ -116,14 +146,17 @@ export function GroupModal() {
         </div>
 
         {/* Rendering Searched Users */}
-        {searchResults.slice(0, 3).map((user:any) => (
-          <SearchedUsers
+{
+ searchResults.slice(0,1).map((user:any) => (
+            <SearchedUsers
             handleAddUser={() => handleSelectUser(user)}
             avatar={user.avatar}
             username={user.username}
             email={user.email}
-          />
-        ))}
+            />
+            ))
+          }
+    
 
         <DialogFooter>
           <Button type="submit">Create group</Button>

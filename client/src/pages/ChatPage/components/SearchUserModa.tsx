@@ -8,12 +8,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { Input } from "@/components/ui/input";
 import { chatContext } from "@/context/ChatContext";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa6";
-
+import { LuMessageSquarePlus } from "react-icons/lu";
 interface Props{
     fetch:(data:any)=>void
 }
@@ -52,12 +57,25 @@ const SearchUserModal = ({fetch}:Props) => {
   return (
     <>
       <Dialog open={modalOpen}>
-        <DialogTrigger asChild onClick={() => setModalOpen(true)}>
-          <button className="border-2 flex justify-center items-center gap-2 opacity-60 hover:opacity-100 transition-all border-[#272A30] my-1 py-2 self-center  rounded-3xl bg-opacity-0 w-full">
-            <FaPlus />
-            Search User
-          </button>
-        </DialogTrigger>
+      <DialogTrigger asChild>
+        <div>
+
+            {/*  TRIGGER  */}
+            <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+        <button className="border-2 flex justify-center items-center gap-2 opacity-60 hover:opacity-100 transition-all border-[#272A30] my-1 py-2 self-center  rounded-3xl bg-opacity-0  w-[55px]">
+          <LuMessageSquarePlus  />
+        </button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Direct Message </p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+
+        </div>
+      </DialogTrigger>
         <DialogContent className=" sm:max-w-[425px] ">
           <DialogHeader>
             <DialogTitle>Create a group</DialogTitle>

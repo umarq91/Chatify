@@ -10,18 +10,21 @@
 
     function ChatBox() {
         const [messages, setMessage] : any= useState([]);
-        const { selectedChat }: any= useContext(chatContext);
+        const { selectedChat ,chatResults , setChatResults }: any= useContext(chatContext);
         const chatref : any= useRef(null);
         const { user }: any= useUser();
+
         useEffect(() => {
             chatref.current?.scrollIntoView({ behavior: "smooth" , block: "end" });
         },[messages]);
 
+        
         useEffect(() => {
             socket = io('http://localhost:5000');
 
             socket.on('connect', () => console.log('Connected to socket.io server'));
             socket.emit("joinchat", selectedChat._id);
+       
             return () => socket.disconnect(); // Clean up socket connection on unmount
         }, []);
 
@@ -29,17 +32,23 @@
         useEffect(() => {
           const fetchMessage=async()=>{
               const {data} : any= await axios.get('/api/message/'+selectedChat._id)
-              console.log(data);
-              
               setMessage(data)
           }
-          fetchMessage()
-          socket.on('messagereceived', (newMessage:any) => {
-            console.log(newMessage);
-            
+
+          fetchMessage();
+        
+          socket.on('messagereceived', (newMessage:any) => {       
+            const updatedResults = chatResults.map((chat:any) =>
+            chat._id === newMessage.chat._id ? { ...chat, latestMessage: newMessage } : chat
+          );
+          setChatResults(updatedResults) // updating the sideba
+        
             setMessage((prevMessages:any) => [...prevMessages, newMessage]);
         });
       },[selectedChat]);
+
+
+
 
         const sendMessage = async (e:any, msg:any) => {
           e.preventDefault();
@@ -47,7 +56,7 @@
           // Emit to server for broadcasting
 
           
-          socket.emit("newmessage", data); // Corrected emission
+          socket.emit("newmessage", data); // Corrected emission     
       };
 
     return (

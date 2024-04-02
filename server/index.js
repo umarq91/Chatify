@@ -60,7 +60,6 @@ io.on('connection', (socket) => {
 
   socket.on('joinchat', (chatId) => {
       socket.join(chatId); // Join the chat room
-      console.log(`User joined chat: ${chatId}`);
     });
 
   socket.on('newmessage', async (message) => {

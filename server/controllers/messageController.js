@@ -20,16 +20,16 @@ const sendMessage = asyncHandler(async (req, res) => {
       chat: chatId
     });
 
-console.log(newMessage);
+
     newMessage = await newMessage.populate("sender", "username avatar")
 
-    newMessage = await MessageModel.findById(newMessage._id).populate("chat").populate('sender', 'username avatar email');
+    newMessage = await MessageModel.findById(newMessage._id).populate("chat").populate('sender', 'username avatar email')
 
     newMessage = await UserModel.populate(newMessage, {
       path: "chat.users",
       select: "username avatar email"
     });
-console.log(newMessage);
+
     // Update latest message in the associated chat
     await ChatModel.findByIdAndUpdate(chatId, { latestMessage: newMessage });
 
