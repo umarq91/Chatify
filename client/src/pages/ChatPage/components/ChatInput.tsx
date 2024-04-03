@@ -23,7 +23,7 @@ const {selectedChat}:any = useContext(chatContext)
 
   return (
     <div className="rounded-xl ">
-      <form className="flex relative justify-center">
+      <form className="flex relative justify-center ">
 
       <textarea
   value={inputMessage}
@@ -32,7 +32,7 @@ const {selectedChat}:any = useContext(chatContext)
   onPaste={(e) => setInputMessage(e.clipboardData.getData('text'))}
   onKeyPress={handleKeyPress}
   placeholder={``}
-  className="fixed bottom-8 w-[60%] rounded-md  outline-none border bg-gray-300 border-gray-300 text-black resize-vertical" 
+  className="fixed  bottom-1  w-full md:w-[50%] rounded-md  outline-none border bg-gray-300 border-gray-300 text-black resize-vertical" 
   style={{ whiteSpace: 'pre-wrap' }}
 />
 

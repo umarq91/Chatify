@@ -20,7 +20,6 @@ function App() {
         <UserProvider>
 
           <ChatProvider>
-            <Navbar />
             <Routes>
               <Route path="/" element={<AuthPage />} />
        

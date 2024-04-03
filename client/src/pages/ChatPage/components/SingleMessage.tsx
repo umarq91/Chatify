@@ -32,7 +32,7 @@ function SingleMessage({ content, sender, isSenderUser, avatar, messages, index,
       )}
     </div>
       <div
-          className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
+          className="relative ml-3 text-sm bg-[#151515] text-white py-2 px-4 shadow rounded-xl"
       >
         <h2 className="text-md">{content}</h2>
         <p className="text-xs">{format(time)}</p>
@@ -53,7 +53,7 @@ function SingleMessage({ content, sender, isSenderUser, avatar, messages, index,
       )}
     </div>
           <div
-              className="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl"
+              className="relative mr-3 text-sm bg-[#001A3D] text-white py-2 px-4 shadow rounded-xl"
           >
             <div>{content}</div>
             <p className="text-xs">{format(time)}</p>

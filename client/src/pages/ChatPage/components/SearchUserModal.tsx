@@ -85,6 +85,7 @@ const SearchUserModal = ({ fetch }: Props) => {
   return (
     <>
       <Dialog  open={modalOpen}>
+
         <DialogTrigger asChild>
           <div>
             {/*  TRIGGER  */}

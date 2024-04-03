@@ -61,8 +61,8 @@
 
     return (
     <div>
-    <div className="h-screen py-4 relative text-black">
-    <div className="overflow-y-auto">
+   <div style={{ height: "calc(100vh - 60px)", overflowY: "auto", backgroundImage: "url('https://i.redd.it/ts7vuoswhwf41.jpg')", backgroundSize: "cover", backgroundBlendMode: "rgba(0, 0, 0, 0.1)" }} className="overflow-y-scroll py-4 relative text-black">
+    <div className="overflow-y-auto pb-12 md:pb-14">
 
     {messages.map((message:any,index:number) => (
     <SingleMessage
@@ -78,7 +78,7 @@
     />
     ))}
     </div>
-    <div className="pb-20" ref={chatref}/>
+    <div className="" ref={chatref}/>
     </div>
     <ChatInput sendMessage={sendMessage}/>
     </div>

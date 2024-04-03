@@ -26,7 +26,7 @@ export function GroupModal() {
 
   const [groupChatName,setGroupChatName] = useState('')
   const [searchResults,setSearchResults] = useState([])
-  const [selectedUsers,setSelectedUsers] = useState<any[]>([])
+  const [selectedUsers,setSelectedUsers] = useState([])
   const [searchQuery,setSearchQuery] = useState('')
 
   // append with the chats ( Side bar chats )
@@ -39,7 +39,7 @@ export function GroupModal() {
             const { data } = await axios.get(`api/user?search=${searchQuery}`);
             console.log(data);
               
-            setSearchResults(data);
+             setSearchResults((prevResults) => [...prevResults, data]);
       
      
         } catch (error) {
@@ -52,15 +52,13 @@ export function GroupModal() {
     };
 
   const time =   setTimeout(()=>{
-
       fetchData();
     },1500)
 
     return () => {
-      // Cleanup function to cancel any pending requests on unmount
       clearTimeout(time)
-     axios.Cancel
-    }; // Add a dependency array to avoid infinite loops:
+
+    }; 
   }, [searchQuery]);
 
 
@@ -83,7 +81,11 @@ export function GroupModal() {
       toast.error("User already selected")
       return
     }
+    console.log(user);
+    
     setSelectedUsers([...selectedUsers,user])
+    setSearchQuery('')
+    setSearchResults([])
   }
   return (
     <Dialog>
@@ -120,6 +122,8 @@ export function GroupModal() {
               id="name"
               placeholder="Group Chat Name"
               className="w-full "
+              value={groupChatName}
+              onChange={(e)=>setGroupChatName(e.target.value)}
             />
           </div>
 
@@ -128,7 +132,7 @@ export function GroupModal() {
               id="search"
               value={searchQuery}
               onChange={(e)=>setSearchQuery(e.target.value)}
-              placeholder="Add Users email eg abc@gmail.com"
+              placeholder="Add users by email..."
             />
           </div>
         </div>
@@ -149,6 +153,7 @@ export function GroupModal() {
 {
  searchResults.slice(0,1).map((user:any) => (
             <SearchedUsers
+            key={user._id}
             handleAddUser={() => handleSelectUser(user)}
             avatar={user.avatar}
             username={user.username}
