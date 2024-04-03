@@ -11,6 +11,8 @@ const accessChat = asyncHandler(async (req, res) => {
         return next(customError(400, "User Id not sent with request"));
     }
 
+    // Find the chat , if it exists return that , else create a new chat
+
     let isChat = await Chat.find({
         isGroupChat: false,
         $and: [

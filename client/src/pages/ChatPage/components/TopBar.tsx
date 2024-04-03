@@ -1,6 +1,5 @@
-
 import { GroupModal } from './GroupModal'
-import SearchUserModal from './SearchUserModa'
+import SearchUserModal from './SearchUserModal'
 import { CiLogout } from "react-icons/ci";
 import axios from 'axios';
 import {
@@ -14,12 +13,8 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-  import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-  } from "@/components/ui/tooltip"
+  import { RxHamburgerMenu } from "react-icons/rx";
+
 interface Props {
   hanldeAddChat: (data: any) => void
 }
@@ -50,36 +45,20 @@ const TopBar = ({ hanldeAddChat }: Props) => {
       <div className='flex-shrink-0'>
       <AlertDialog>
       <AlertDialogTrigger asChild>
-        <div>
-
-        <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-        <button  className="border-2 flex justify-center items-center gap-2 opacity-60 hover:opacity-100 transition-all border-[#272A30] my-1 py-2 self-center  rounded-3xl bg-opacity-0  w-[50px]">
+      <button  className="border-2 flex justify-center items-center gap-2 opacity-60 hover:opacity-100 transition-all border-[#272A30] my-1 py-2 self-center  rounded-3xl bg-opacity-0  w-[50px]">
       <CiLogout/>
       </button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Logout</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-     
-
-        </div>
-
       </AlertDialogTrigger>
-
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Confirm logout?</AlertDialogTitle>
           <AlertDialogDescription>
-           Are you sure you want to logout?
+           Are you sure you want to logout ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleLogout}>Confirm</AlertDialogAction>
+          <AlertDialogAction>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

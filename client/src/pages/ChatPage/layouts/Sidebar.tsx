@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { CiChat1, CiSearch } from "react-icons/ci";
 import { SkeletonDemo } from '../components/Skeleton';
 import SideSingleChat from '../components/SingleSideChat';
-import { chatContext, useChatContext } from '@/context/ChatContext';
+import { chatContext } from '@/context/ChatContext';
 import TopBar from '../components/TopBar';
 
 interface SidebarProps {
@@ -64,9 +64,10 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
 
   const handleAddChat = (data: any) => {
     // Check if the chat already exists in chatResults
-    const chatExists = chatResults.some((chat:any) => chat._id === data.id);
+    const chatExists = chatResults.some((chat:any) => chat._id === data._id);
   
-    // If the chat doesn't already exist, add it to chatResults
+
+    
     if (!chatExists) {
       setChatResults([...chatResults, data]);
     }
