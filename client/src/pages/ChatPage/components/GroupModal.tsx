@@ -15,31 +15,41 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Input } from "@/components/ui/input"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { SearchedUsers } from "./SearchedUsers"
 import { toast } from "sonner"
 import UserBadge from "./UserBadge"
 import axios from "axios"
 import { MdGroupAdd } from "react-icons/md";
+import { chatContext } from "@/context/ChatContext"
 
-export function GroupModal() {
+interface Props{
+  addChat: (data: any) => void
+}
+
+export function GroupModal({addChat}:Props) {
 
   const [groupChatName,setGroupChatName] = useState('')
   const [searchResults,setSearchResults] = useState([])
   const [selectedUsers,setSelectedUsers] = useState([])
   const [searchQuery,setSearchQuery] = useState('')
-
-  // append with the chats ( Side bar chats )
+  const {setSelectedChat} = useContext(chatContext)
+  const [modalOpen,setModalOpen] = useState(false)
+  const [loading,setLoading] = useState(false)
+  const [noFoundMessage,setNoFoundMessage] = useState('') 
 
  useEffect(() => {
     const fetchData = async () => {
       if (searchQuery.length > 1) {
         try {
-       
+          setLoading(true)
             const { data } = await axios.get(`api/user?search=${searchQuery}`);
-            console.log(data);
-              
-             setSearchResults((prevResults) => [...prevResults, data]);
+            setLoading(false)
+            if (data.message) {
+              setNoFoundMessage("No users Found");
+            }else{ 
+              setSearchResults((prevResults) => [...prevResults, data]);
+            }
       
      
         } catch (error) {
@@ -61,17 +71,37 @@ export function GroupModal() {
     }; 
   }, [searchQuery]);
 
+  useEffect(() => {
+    
+    setSearchResults([]);
+    setNoFoundMessage('')
+  },[searchQuery])
 
 
-  const handleSubmit = () => {
+  const handleSubmit =async () => {
     if(!groupChatName || !selectedUsers) {
       toast.error("Please fill all fields")
       return
     }
    
     try {
-      // Todo : API CALL for creating a group chat
+       const res =  await  axios.post('/api/chat/group', {name:groupChatName,users:selectedUsers})
+      if(res.data.length==0){
+      return  setNoFoundMessage('No users found')
+      }
+        if(res.status==200){
+          // set selected chat to ths and close modal
+          setSelectedChat(res.data)
+
+          setSelectedUsers([])
+          setGroupChatName('')
+          addChat(res.data) // adding chat into another Side Chats
+          setModalOpen(false)
+        }
+  
     } catch (error) {
+      console.log(error);
+      setNoFoundMessage(error.response.data)
       
     }
   }
@@ -81,15 +111,14 @@ export function GroupModal() {
       toast.error("User already selected")
       return
     }
-    console.log(user);
     
     setSelectedUsers([...selectedUsers,user])
     setSearchQuery('')
     setSearchResults([])
   }
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Dialog open={modalOpen}>
+      <DialogTrigger asChild onClick={() => setModalOpen(true)}>
         <div>
 
             {/*  TRIGGER  */}
@@ -149,6 +178,9 @@ export function GroupModal() {
           ))}
         </div>
 
+
+{loading&& <p className="text-center">Seaching...</p>}
+{noFoundMessage && <p className="text-center">{noFoundMessage}</p>}
         {/* Rendering Searched Users */}
 {
  searchResults.slice(0,1).map((user:any) => (
@@ -164,7 +196,10 @@ export function GroupModal() {
     
 
         <DialogFooter>
-          <Button type="submit">Create group</Button>
+          <Button variant="outline" onClick={() => setModalOpen(false)}>Cancel</Button>
+
+          <Button onClick={handleSubmit} type="submit">Create group</Button>
+       
         </DialogFooter>
       </DialogContent>
     </Dialog>

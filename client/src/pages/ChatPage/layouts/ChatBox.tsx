@@ -5,7 +5,6 @@
     import ChatInput from "../components/ChatInput";
     import { useUser } from "@/context/userContext";
     import io from "socket.io-client";
-
     let socket:any;
 
     function ChatBox() {
@@ -13,6 +12,7 @@
         const { selectedChat ,chatResults , setChatResults }: any= useContext(chatContext);
         const chatref : any= useRef(null);
         const { user }: any= useUser();
+        const [loading,setLoading]=useState(false)
 
         useEffect(() => {
             chatref.current?.scrollIntoView({ behavior: "smooth" , block: "end" });
@@ -31,7 +31,9 @@
 
         useEffect(() => {
           const fetchMessage=async()=>{
+            setLoading(true)
               const {data} : any= await axios.get('/api/message/'+selectedChat._id)
+              setLoading(false)
               setMessage(data)
           }
 
@@ -61,22 +63,32 @@
 
     return (
     <div>
-   <div style={{ height: "calc(100vh - 60px)", overflowY: "auto", backgroundImage: "url('https://i.redd.it/ts7vuoswhwf41.jpg')", backgroundSize: "cover", backgroundBlendMode: "rgba(0, 0, 0, 0.1)" }} className="overflow-y-scroll py-4 relative text-black">
+   <div style={{ height: "calc(100vh - 60px)", overflowY: "auto" }} className="overflow-y-scroll  bg-black py-4 relative text-black">
     <div className="overflow-y-auto pb-12 md:pb-14">
 
-    {messages.map((message:any,index:number) => (
-    <SingleMessage
-    key={message._id} // Assuming a unique message ID
-    content={message.content}
-    sender={message.sender.username}
-    isSenderUser={message.sender._id !== user._id} // mssage is send by the logged in user or not
-    avatar={message.sender.avatar}
-    messages={messages} // Pass the entire messages array
-    index={index}
-    senderId={message.sender._id}
-    time={message.createdAt}
-    />
-    ))}
+{/* Loading  */}
+
+    {loading ? (
+    <div className="flex items-center justify-center h-[80vh] text-white">
+      Loading messages
+      </div>
+    ) : (
+      messages.map((message:any,index:number) => (
+        <SingleMessage
+        key={message._id} // Assuming a unique message ID
+        content={message.content}
+        sender={message.sender.username}
+        isSenderUser={message.sender._id !== user._id} // mssage is send by the logged in user or not
+        avatar={message.sender.avatar}
+        messages={messages} // Pass the entire messages array
+        index={index}
+        senderId={message.sender._id}
+        time={message.createdAt}
+        />
+        ))
+    )}
+
+
     </div>
     <div className="" ref={chatref}/>
     </div>

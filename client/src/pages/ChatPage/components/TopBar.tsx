@@ -87,8 +87,8 @@ const TopBar = ({ hanldeAddChat }: Props) => {
 
       {/* Right Icons */}
       <div className="flex flex-shrink-0 gap-1">
-        <GroupModal /> {/* Set modal width */}
-        <SearchUserModal fetch={hanldeAddChat} /> {/* Set modal width */}
+        <GroupModal  addChat={hanldeAddChat}/> {/* Set modal width */}
+        <SearchUserModal addChat={hanldeAddChat} /> {/* Set modal width */}
       </div>
     </div>
   );

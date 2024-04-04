@@ -71,20 +71,21 @@ const fetchChats = asyncHandler(async (req, res) => {
 
 
 const createGroupChat = asyncHandler(async (req, res) => {
+  try {
   if (!req.body.users || !req.body.name) {
     return next(customError(400, "Please fill all the fields"));
   }
 
-  let users = JSON.parse(req.body.users);
-
+  let users = req.body.users;
   if (users.length < 2) {
+    
     return res
       .status(400)
       .send("More than 2 users are required to form a group chat");
   }
 
   users.push(req.user);
-  try {
+
     const groupChat = await Chat.create({
       chatName: req.body.name,
       users: users,
@@ -98,6 +99,7 @@ const createGroupChat = asyncHandler(async (req, res) => {
 
     res.status(200).json(fetchGroupChat);
   } catch (error) {
+    console.log(error);
     throw new Error(error.message);
   }
 });

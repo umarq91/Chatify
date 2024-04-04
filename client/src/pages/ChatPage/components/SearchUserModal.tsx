@@ -21,10 +21,10 @@ import { useContext, useEffect, useState } from "react";
 import { LuMessageSquarePlus } from "react-icons/lu";
 
 interface Props {
-  fetch: (data: any) => void
+  addChat: (data: any) => void
 }
 
-const SearchUserModal = ({ fetch }: Props) => {
+const SearchUserModal = ({ addChat }: Props) => {
   const [inputValue, setInputValue] = useState('');
   const [searchedUsers, setSearchedUsers]: any = useState(null);
   const [loading, setLoading] = useState(false);
@@ -61,8 +61,8 @@ const SearchUserModal = ({ fetch }: Props) => {
     try {
       const { data } = await axios.post('/api/chat', { userId: searchedUsers._id });
       setSelectedChat(data);
-      fetch(data);
-      setModalOpen(false); // Close the modal when user is selected
+      addChat(data); // adding chat to sideba
+      setModalOpen(false); 
       setInputValue('')
     } catch (error) {
       console.log(error);
