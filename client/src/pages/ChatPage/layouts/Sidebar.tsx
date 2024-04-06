@@ -43,6 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
 
 
 
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value.toLowerCase();
     setSearch(searchTerm);
@@ -65,9 +66,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
   const handleAddChat = (data: any) => {
     // Check if the chat already exists in chatResults
     const chatExists = chatResults.some((chat:any) => chat._id === data._id);
-  
 
-    
     if (!chatExists) {
       setChatResults([...chatResults, data]);
     }

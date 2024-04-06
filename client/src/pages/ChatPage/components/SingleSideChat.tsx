@@ -52,7 +52,7 @@ const SideSingleChat = ({ chat }: SideChatProps) => {
       <div className="flex justify-between items-center h-full w-full  px-1">
         <div className="flex w-full items-center gap-3">
           <img
-            src={getAvatar()}
+            src={!chat.isGroupChat ? getAvatar() : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKQglNCqZI_Jh-4jTOnQpbMmVD1vhks4r6NYLKH6NWIg&s"}
             className="w-12 h-12 object-cover rounded-full"
             alt={chat.isGroupChat ? chat.chatName : getUsername()} // Set alt text
           />
@@ -60,9 +60,9 @@ const SideSingleChat = ({ chat }: SideChatProps) => {
             <h2 className="text-lg">{getUsername()}</h2>
             <div className={`flex justify-around w-full  ${"umer" ? "text-white" : "text-[#747881]"}`}>
               <p className={`text-xs w-[80%] tracking-wide truncate line-clamp-1 text-gray-500`}>
-                {truncatedMessage}
+                {truncatedMessage || "Start chat"} 
               </p>
-              <span className="text-[10px] w-full text-right text-gray-600">{format(chat?.latestMessage?.createdAt) || ""}</span> {/* Display time if available */}
+              <span className="text-[10px] w-full text-right text-gray-600">{chat?.latestMessage?.createdAt ? format(chat?.latestMessage?.createdAt) : ""}</span> {/* Display time if available */}
             </div>
           </div>
         </div>

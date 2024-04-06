@@ -4,8 +4,8 @@
     import SingleMessage from "../components/SingleMessage";
     import ChatInput from "../components/ChatInput";
     import { useUser } from "@/context/userContext";
-    import io from "socket.io-client";
-    let socket:any;
+import SocketContext from "@/context/socketContext";
+
 
     function ChatBox() {
         const [messages, setMessage] : any= useState([]);
@@ -13,42 +13,45 @@
         const chatref : any= useRef(null);
         const { user }: any= useUser();
         const [loading,setLoading]=useState(false)
+        const {socket}:any = useContext(SocketContext);
 
         useEffect(() => {
-            chatref.current?.scrollIntoView({ behavior: "smooth" , block: "end" });
-        },[messages]);
-
+          chatref.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+        }, [messages]);
         
         useEffect(() => {
-            socket = io('http://localhost:5000');
-
-            socket.on('connect', () => console.log('Connected to socket.io server'));
+          if (selectedChat && socket) {
             socket.emit("joinchat", selectedChat._id);
-       
-            return () => socket.disconnect(); // Clean up socket connection on unmount
-        }, []);
-
-
-        useEffect(() => {
-          const fetchMessage=async()=>{
-            setLoading(true)
-              const {data} : any= await axios.get('/api/message/'+selectedChat._id)
-              setLoading(false)
-              setMessage(data)
           }
-
+        }, []);
+        
+        useEffect(() => {
+          const fetchMessage = async () => {
+            setLoading(true);
+            const { data } = await axios.get('/api/message/' + selectedChat._id);
+            setLoading(false);
+            setMessage(data);
+          };
+        
           fetchMessage();
         
-          socket.on('messagereceived', (newMessage:any) => {       
-            const updatedResults = chatResults.map((chat:any) =>
-            chat._id === newMessage.chat._id ? { ...chat, latestMessage: newMessage } : chat
-          );
-          setChatResults(updatedResults) // updating the sideba
+          if (socket) {
+            const messageReceivedHandler = (newMessage: any) => {
+              const updatedResults = chatResults.map((chat: any) =>
+                chat._id === newMessage.chat._id ? { ...chat, latestMessage: newMessage } : chat
+              );
+              setChatResults(updatedResults); // updating the sidebar
         
-            setMessage((prevMessages:any) => [...prevMessages, newMessage]);
-        });
-      },[selectedChat]);
-
+              setMessage((prevMessages: any) => [...prevMessages, newMessage]);
+            };
+        
+            socket.on('messagereceived', messageReceivedHandler);
+        
+            return () => {
+              socket.off('messagereceived', messageReceivedHandler);
+            };
+          }
+        }, [selectedChat, socket]);
 
 
 
@@ -56,8 +59,7 @@
           e.preventDefault();
           const { data } = await axios.post('/api/message', { content: msg, chatId: selectedChat._id });
           // Emit to server for broadcasting
-
-          
+      
           socket.emit("newmessage", data); // Corrected emission     
       };
 

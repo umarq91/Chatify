@@ -6,6 +6,7 @@ import axios from "axios";
 import { Toaster } from "@/components/ui/sonner";
 import { ChatProvider } from "./context/ChatContext.tsx";
 import  UserProvider  from "./context/userContext.tsx";
+import { SocketProvider } from "./context/socketContext.tsx";
 
 function App() {
   axios.defaults.baseURL = "http://127.0.0.1:5000";
@@ -16,9 +17,11 @@ function App() {
     <>
       <div className="h-screen overflow-hidden">
         <Toaster />
-        <BrowserRouter>
-        <UserProvider>
 
+        <BrowserRouter>
+      <SocketProvider>
+
+        <UserProvider>
           <ChatProvider>
             <Routes>
               <Route path="/" element={<AuthPage />} />
@@ -27,6 +30,7 @@ function App() {
             </Routes>
           </ChatProvider>
         </UserProvider>
+      </SocketProvider>
         </BrowserRouter>
       </div>
     </>

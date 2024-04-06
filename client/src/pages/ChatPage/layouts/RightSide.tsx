@@ -23,19 +23,15 @@ const {user}:any = useUser()
       {selectedChat ? (
         <>
           <div className="flex gap-2 ">
-            {selectedChat.isGroupChat ? (
-              <h2>{selectedChat.chatName}</h2>
-            ) : (
-              
+            {
             <ChatBoxTopBar
-            avatar={checkSender(user._id, selectedChat.users)?.avatar}
-            username={checkSender(user._id, selectedChat.users)?.username}
+            isGroupChat={selectedChat.isGroupChat}
+            avatar={ !selectedChat.isGroupChat ?  checkSender(user._id, selectedChat.users)?.avatar : "https://freeiconshop.com/wp-content/uploads/edd/many-people-outline.png"}
+            username={ !selectedChat.isGroupChat ? checkSender(user._id, selectedChat.users)?.username : selectedChat.chatName}
             onlineStatus={"Online for 10 minutes"}
             setSelectedChat={setSelectedChat}
-            
-          />
-              
-            )}
+            members={selectedChat.users}
+          /> } 
           </div>
     
           <ChatBox />

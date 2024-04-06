@@ -20,6 +20,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { LuMessageSquarePlus } from "react-icons/lu";
 
+let socket:any;
 interface Props {
   addChat: (data: any) => void
 }
@@ -31,6 +32,8 @@ const SearchUserModal = ({ addChat }: Props) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [modalOpen, setModalOpen] = useState(false); // State for controlling modal visibility
   const { setSelectedChat }: any = useContext(chatContext);
+
+
 
   const handleSearch = () => {
     setLoading(true);
@@ -64,6 +67,8 @@ const SearchUserModal = ({ addChat }: Props) => {
       addChat(data); // adding chat to sideba
       setModalOpen(false); 
       setInputValue('')
+      // add chat to other users in real time ..
+   socket.emit('newChat', data);
     } catch (error) {
       console.log(error);
     }

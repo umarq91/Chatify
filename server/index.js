@@ -61,12 +61,13 @@ io.on('connection', (socket) => {
 
   socket.on('joinchat', (chatId) => {
       socket.join(chatId); // Join the chat room
+      console.log(`User joined chat ${chatId}`);
     });
 
   socket.on('newmessage', async (message) => {
     const { sender, content, chat } = message;
     const { _id: chatId } = chat;
- 
+
     try {
       // ... logic to save message to database (if needed)
       io.to(chatId).emit('messagereceived', message);
@@ -75,6 +76,12 @@ io.on('connection', (socket) => {
     }
   }); 
 
+  socket.on('newChat', (chatData) => {
+    // Save chatData to your database
+
+    // Emit the new chat data to the appropriate client(s)
+    io.emit('newChat', chatData); // You might want to emit to specific users instead of broadcasting to all
+  });
   socket.on('disconnect', () => {
       console.log('A user disconnected');
   });

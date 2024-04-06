@@ -2,15 +2,19 @@ import { IoArrowBack } from "react-icons/io5";
 
 interface Props {
   avatar: string;
+  isGroupChat: boolean;
   username: string;
   onlineStatus: string; // TODO add online status
   setSelectedChat: (chat: any) => void;
+  members: any;
 }
 const ChatBoxTopBar = ({
   avatar,
   username,
   onlineStatus,
+  isGroupChat,
   setSelectedChat,
+  members
 }: Props) => {
   return (
     <div className="w-full flex items-center h-auto py-2 bg-[#17191C] ">
@@ -29,7 +33,7 @@ const ChatBoxTopBar = ({
 
       <div className="flex flex-col -gap-2 ml-2 justify-center">
       <h2 className="font-bold text-md">{username}</h2>
-      <p className="block text-xs text-[#747881]">{onlineStatus}</p>
+      <p className="block text-xs text-[#747881]">{isGroupChat ? ` You and ${members.length-1} others` : onlineStatus}</p>
       </div>
   
     </div>

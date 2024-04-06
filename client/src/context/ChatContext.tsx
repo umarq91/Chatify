@@ -14,7 +14,7 @@ export const ChatProvider = ({ children }:ChatProps) => {
 
     const [selectedChat,setSelectedChat] = useState(null)
     const [chatResults, setChatResults] = useState<Chat[]>([]); 
-
+    
     
     return(
         <chatContext.Provider value={{selectedChat,setSelectedChat,chatResults,setChatResults}}>
