@@ -11,7 +11,7 @@ div.scrollbar-thin::-webkit-scrollbar:hover {
 
 /* Scrollbar thumb style */
 div.scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: #ccc;
+  background-color: #868686;
   border-radius: 2rem;
   cursor: pointer;
   transition: width 0.7s ease; /* Smooth transition effect */

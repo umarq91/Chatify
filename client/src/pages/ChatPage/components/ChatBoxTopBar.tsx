@@ -1,5 +1,8 @@
 import { IoArrowBack } from "react-icons/io5";
-
+import {
+  DropdownMenu,DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
+   DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
+import { SlOptionsVertical } from "react-icons/sl";
 interface Props {
   avatar: string;
   isGroupChat: boolean;
@@ -9,16 +12,15 @@ interface Props {
   members: any;
 }
 const ChatBoxTopBar = ({
-  avatar,
-  username,
-  onlineStatus,
-  isGroupChat,
-  setSelectedChat,
-  members
-}: Props) => {
+  avatar, username, onlineStatus, isGroupChat,setSelectedChat,members}: Props) => {
+
+
+
   return (
-    <div className="w-full flex items-center h-auto py-2 bg-[#17191C] ">
-            <div
+    <div className="w-full flex justify-between py-2 pr-10 items-center bg-[#17191C] ">
+
+      <div className="flex items-center h-auto">
+      <div
         onClick={() => {
           setSelectedChat(null);
         }}
@@ -35,7 +37,27 @@ const ChatBoxTopBar = ({
       <h2 className="font-bold text-md">{username}</h2>
       <p className="block text-xs text-[#747881]">{isGroupChat ? ` You and ${members.length-1} others` : onlineStatus ? "Online" : "Offline"}</p>
       </div>
-  
+      </div>
+     
+     <div>
+
+      {isGroupChat && (
+           <DropdownMenu>
+           <DropdownMenuTrigger> <SlOptionsVertical /> </DropdownMenuTrigger>
+           <DropdownMenuContent>
+             <DropdownMenuLabel>Settings</DropdownMenuLabel>
+             <DropdownMenuSeparator />
+             
+             <DropdownMenuItem className="cursor-pointer">Add members</DropdownMenuItem>
+             <DropdownMenuItem className="cursor-pointer">Rename Group</DropdownMenuItem>
+             <DropdownMenuItem className="cursor-pointer">Delete Group</DropdownMenuItem>
+         
+           </DropdownMenuContent>
+         </DropdownMenu>
+      )}
+   
+     </div>
+
     </div>
   );
 };

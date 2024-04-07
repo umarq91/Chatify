@@ -11,13 +11,13 @@ interface Props {
 }
 
 const RightSide = ({selectedChat, setSelectedChat}:Props) => {
-  const {onlineUsers} = useContext(SocketContext)
+  const {onlineUsers}:any = useContext(SocketContext)
 const {user}:any = useUser()
 
 
   return (
     <div
-      className={`flex-1 md:block bg-[#1C1E22]   h-full  text-white ${
+      className={`flex-1 md:block bg-red-500 relative   h-full  text-white ${
         selectedChat ? "block" : "hidden"
       }`}
     >

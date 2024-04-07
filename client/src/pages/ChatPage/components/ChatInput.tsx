@@ -1,7 +1,7 @@
 import { chatContext } from '@/context/ChatContext';
-import axios from 'axios';
+import { MdEmojiEmotions } from "react-icons/md";
 import {  useState,  useContext } from 'react';
-
+import { IoMdSend } from "react-icons/io";
 interface ChatInputProps {
   sendMessage: (e: any,msg:string) => void;
 }
@@ -23,19 +23,20 @@ const {selectedChat}:any = useContext(chatContext)
 
   return (
     <div className="rounded-xl ">
-      <form className="flex relative justify-center ">
-
-      <textarea
+      <form className=" absolute bottom-0 flex bg-[#17191C] w-full items-center  py-2  px-2 gap-3 ">
+      <MdEmojiEmotions color='Gray'  size={40} className=''/>
+      <input
   value={inputMessage}
   autoFocus
   onChange={(e) => setInputMessage(e.target.value)}
   onPaste={(e) => setInputMessage(e.clipboardData.getData('text'))}
   onKeyPress={handleKeyPress}
-  placeholder={``}
-  className="fixed  bottom-1  w-full md:w-[50%] rounded-md  outline-none border bg-gray-300 border-gray-300 text-black resize-vertical" 
+  placeholder={`Type you message`}
+  className="bg-[#17191C] border-2  flex-1 rounded-[20px] border-[#272A30] py-2   px-4 text-gray-300 outline-none resize-vertical"
   style={{ whiteSpace: 'pre-wrap' }}
 />
-
+{/*TODO :  Plus button here for images and files */}
+<IoMdSend className='bg-[#4C525C] rounded-full p-1 self-center text-center' color='white' size={42}/>
       </form>
       {error && <p className="error">{error}</p>}
     </div>

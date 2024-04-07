@@ -11,7 +11,7 @@ interface SideChatProps {
 const SideSingleChat = ({ chat }: SideChatProps) => {
   const {selectedChat, setSelectedChat }:any = useContext(chatContext);
   const { user }:any = useContext(UserContext);
-  const {socket,onlineUsers} = useContext(SocketContext)
+  const {onlineUsers}:any = useContext(SocketContext)
   const truncateText = (text: string, maxWords: number) => {
     const words = text.split(" ");
     if (words.length > maxWords) {
@@ -25,15 +25,13 @@ const SideSingleChat = ({ chat }: SideChatProps) => {
   const truncatedMessage = truncateText(chat?.latestMessage?.content || "", 32); // Handle missing lastMessage
 
   const handleSelectChat = () => {
-    setSelectedChat(chat); // Set the selected chat ID
-    
+    setSelectedChat(chat); 
   };
 
   const getAvatar = () => {
     if (chat.isGroupChat) {
-      return chat.chatName; // Use chat name for group avatar (if available)
+      return chat.chatName; // Use chat name for group
     } else {
-      // Assuming checkSender returns user object with avatar property
       return checkSender(user._id, chat.users)?.avatar;
     }
   };

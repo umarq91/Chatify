@@ -5,7 +5,7 @@
     import ChatInput from "../components/ChatInput";
     import { useUser } from "@/context/userContext";
 import SocketContext from "@/context/socketContext";
-
+import "./Chat.css"
 
     function ChatBox() {
         const [messages, setMessage] : any= useState([]);
@@ -65,8 +65,8 @@ import SocketContext from "@/context/socketContext";
 
     return (
     <div>
-   <div style={{ height: "calc(100vh - 60px)", overflowY: "auto" }} className="overflow-y-scroll  bg-black py-4 relative text-black">
-    <div className="overflow-y-auto pb-12 md:pb-14">
+   <div style={{ height: "calc(100vh - 60px)", overflowY: "auto"  }} className="scrollbar-thin  relative bg-black py-4  text-black">
+    <div className="pb-12 md:pb-14">
 
 {/* Loading  */}
 

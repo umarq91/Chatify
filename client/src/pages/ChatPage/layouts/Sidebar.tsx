@@ -75,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedChat }) => {
 
   return (
     <div
-    className={` md:w-[40%] lg:w-[30%] xl:w-[25%] w-full pt-2 bg-[#17191C] h-screen text-white md:block px-2 ${
+    className={` md:w-[40%] lg:w-[30%] xl:w-[25%] w-full pt-2 bg-[#17191C] border-r-2  border-r-[#202225] h-screen text-white md:block px-2 ${
       selectedChat ? "hidden" : "block"}`}>
 
 <TopBar hanldeAddChat={handleAddChat}/>
