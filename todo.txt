@@ -8,3 +8,4 @@
 
 // FIX GROUP MODAL , users are not adding ! DONE 
 // during refractoring , select all sockets and place it in one file 
+// Online status updates in real time when user gets online , but not in offline

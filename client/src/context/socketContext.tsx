@@ -10,24 +10,33 @@ const SocketContext = createContext({});
 
 export const SocketProvider = ({ children }: SocketContextProps) => {
   const [socket, setSocket] = useState(null);
-  const {user} = useContext(UserContext)
+  const {user}:any = useContext(UserContext)
+  const [onlineUsers, setOnlineUsers] = useState([]);
+
 
   useEffect(() => {
-    const newSocket = io('http://localhost:5000');
-    setSocket(newSocket);
+    if (user) {
+      const newSocket = io('http://localhost:5000', {
+        query: { userId: user._id }, // Use user._id directly as user is available
+      });
+      setSocket(newSocket);
+
+      newSocket.on("onlineusers", (users) => {
+        setOnlineUsers(users);
+      });
   
-    newSocket.on('connect', () => {
-      console.log('Connected to socket.io server from context');
-    });
-  
+    }
+
+ 
+   
     return () => {
-      // Clean up socket connection on unmount
-      newSocket.disconnect();
+      // Disconnect socket when effect unmounts
+      socket && socket.disconnect();
     };
   }, [user?._id]);
 
   return (
-    <SocketContext.Provider value={{ socket}}>
+    <SocketContext.Provider value={{ socket , onlineUsers}}>
       {children}
     </SocketContext.Provider>
   );

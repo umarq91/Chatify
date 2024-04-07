@@ -1,18 +1,19 @@
 import { CiChat1 } from "react-icons/ci";
-import { IoArrowBack } from "react-icons/io5";
 import ChatBox from "../layouts/ChatBox";
 import { checkSender } from "@/config/helpers";
 import { useUser } from "@/context/userContext";
 import ChatBoxTopBar from "../components/ChatBoxTopBar";
-
-
+import SocketContext from "@/context/socketContext";
+import { useContext } from "react";
 interface Props {
     selectedChat: any
     setSelectedChat: any
 }
+
 const RightSide = ({selectedChat, setSelectedChat}:Props) => {
-  
+  const {onlineUsers} = useContext(SocketContext)
 const {user}:any = useUser()
+
 
   return (
     <div
@@ -28,7 +29,7 @@ const {user}:any = useUser()
             isGroupChat={selectedChat.isGroupChat}
             avatar={ !selectedChat.isGroupChat ?  checkSender(user._id, selectedChat.users)?.avatar : "https://freeiconshop.com/wp-content/uploads/edd/many-people-outline.png"}
             username={ !selectedChat.isGroupChat ? checkSender(user._id, selectedChat.users)?.username : selectedChat.chatName}
-            onlineStatus={"Online for 10 minutes"}
+            onlineStatus={onlineUsers.includes(checkSender(user._id, selectedChat.users)._id)}
             setSelectedChat={setSelectedChat}
             members={selectedChat.users}
           /> } 

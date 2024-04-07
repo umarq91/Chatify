@@ -56,8 +56,14 @@ const io = new Server(server, {
   },
 });
 
+const onlineUsersArray = []; 
+
 io.on('connection', (socket) => {
-  console.log('A user connected');
+  console.log("user connected");
+	const userId = socket.handshake.query.userId;
+
+  onlineUsersArray.push(userId);
+  io.emit('onlineusers', onlineUsersArray);
 
   socket.on('joinchat', (chatId) => {
       socket.join(chatId); // Join the chat room
@@ -77,13 +83,17 @@ io.on('connection', (socket) => {
   }); 
 
   socket.on('newChat', (chatData) => {
-    // Save chatData to your database
-
-    // Emit the new chat data to the appropriate client(s)
     io.emit('newChat', chatData); // You might want to emit to specific users instead of broadcasting to all
   });
+
   socket.on('disconnect', () => {
       console.log('A user disconnected');
+    // Remove the disconnected user from onlineUsersArray
+      const index = onlineUsersArray.indexOf(userId);
+      if (index !== -1) {
+        onlineUsersArray.splice(index, 1); // Remove the user ID from onlineUserIds array
+      }
+      io.emit('onlineusers', onlineUsersArray);
   });
 });
 

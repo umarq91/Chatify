@@ -19,9 +19,9 @@ function App() {
         <Toaster />
 
         <BrowserRouter>
+        <UserProvider>
       <SocketProvider>
 
-        <UserProvider>
           <ChatProvider>
             <Routes>
               <Route path="/" element={<AuthPage />} />
@@ -29,8 +29,8 @@ function App() {
               <Route path="/chat" element={<ChatPage />} />
             </Routes>
           </ChatProvider>
-        </UserProvider>
       </SocketProvider>
+        </UserProvider>
         </BrowserRouter>
       </div>
     </>
