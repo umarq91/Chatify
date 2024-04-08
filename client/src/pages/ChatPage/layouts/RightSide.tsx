@@ -17,7 +17,7 @@ const {user}:any = useUser()
 
   return (
     <div
-      className={`flex-1 md:block bg-red-500 relative   h-full  text-white ${
+      className={`flex-1 md:block bg-gray-900 relative   h-full  text-white ${
         selectedChat ? "block" : "hidden"
       }`}
     >

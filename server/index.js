@@ -90,10 +90,11 @@ io.on('connection', (socket) => {
       console.log('A user disconnected');
     // Remove the disconnected user from onlineUsersArray
       const index = onlineUsersArray.indexOf(userId);
+
       if (index !== -1) {
-        onlineUsersArray.splice(index, 1); // Remove the user ID from onlineUserIds array
+        onlineUsersArray.splice(index,1);
       }
-      io.emit('onlineusers', onlineUsersArray);
+      io.emit("onlineusers", onlineUsersArray);
   });
 });
 

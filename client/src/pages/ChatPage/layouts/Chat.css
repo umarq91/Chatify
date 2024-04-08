@@ -16,3 +16,4 @@ div.scrollbar-thin::-webkit-scrollbar-thumb {
   cursor: pointer;
   transition: width 0.7s ease; /* Smooth transition effect */
 }
+

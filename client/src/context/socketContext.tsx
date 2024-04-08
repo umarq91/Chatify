@@ -16,16 +16,21 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io('http://localhost:5000', {
+      const newSocket:any = io('http://localhost:5000', {
         query: { userId: user._id }, // Use user._id directly as user is available
       });
       setSocket(newSocket);
 
-      newSocket.on("onlineusers", (users) => {
+      newSocket.on("onlineusers", (users:any) => {
         setOnlineUsers(users);
       });
+
+      newSocket.on("disconnect", () => {
+        
+      })
   
     }
+
 
  
    

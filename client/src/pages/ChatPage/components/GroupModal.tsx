@@ -116,30 +116,29 @@ export function GroupModal({addChat}:Props) {
     setSearchQuery('')
     setSearchResults([])
   }
+
+  
   return (
     <Dialog open={modalOpen}>
       <DialogTrigger asChild onClick={() => setModalOpen(true)}>
         <div>
-
-            {/*  TRIGGER  */}
-            <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-        <button className="border-2 flex justify-center items-center gap-2 opacity-60 hover:opacity-100 transition-all border-[#272A30] my-1 py-2 self-center  rounded-3xl bg-opacity-0 w-[55px]">
-          <MdGroupAdd />
-        </button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Create group</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-
+          {/*  TRIGGER  */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button className="border-2 flex justify-center items-center gap-2 opacity-60 hover:opacity-100 transition-all border-[#272A30] my-1 py-2 self-center  rounded-3xl bg-opacity-0 w-[55px]">
+                  <MdGroupAdd />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Create group</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </DialogTrigger>
 
-
-                   {/* Content  */}
+      {/* Content  */}
       <DialogContent className=" sm:max-w-[425px] ">
         <DialogHeader>
           <DialogTitle>Create a group</DialogTitle>
@@ -152,7 +151,7 @@ export function GroupModal({addChat}:Props) {
               placeholder="Group Chat Name"
               className="w-full "
               value={groupChatName}
-              onChange={(e)=>setGroupChatName(e.target.value)}
+              onChange={(e) => setGroupChatName(e.target.value)}
             />
           </div>
 
@@ -160,7 +159,7 @@ export function GroupModal({addChat}:Props) {
             <Input
               id="search"
               value={searchQuery}
-              onChange={(e)=>setSearchQuery(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Add users by email..."
             />
           </div>
@@ -178,28 +177,27 @@ export function GroupModal({addChat}:Props) {
           ))}
         </div>
 
-
-{loading&& <p className="text-center">Seaching...</p>}
-{noFoundMessage && <p className="text-center">{noFoundMessage}</p>}
+        {loading && <p className="text-center">Seaching...</p>}
+        {noFoundMessage && <p className="text-center">{noFoundMessage}</p>}
         {/* Rendering Searched Users */}
-{
- searchResults.slice(0,1).map((user:any) => (
-            <SearchedUsers
+        {searchResults.slice(0, 1).map((user: any) => (
+          <SearchedUsers
             key={user._id}
             handleAddUser={() => handleSelectUser(user)}
             avatar={user.avatar}
             username={user.username}
             email={user.email}
-            />
-            ))
-          }
-    
+          />
+        ))}
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => setModalOpen(false)}>Cancel</Button>
+          <Button variant="outline" onClick={() => setModalOpen(false)}>
+            Cancel
+          </Button>
 
-          <Button onClick={handleSubmit} type="submit">Create group</Button>
-       
+          <Button onClick={handleSubmit} type="submit">
+            Create group
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

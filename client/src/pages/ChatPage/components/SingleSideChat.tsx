@@ -72,7 +72,7 @@ const isOnline = () => {
           <div className="flex w-full flex-col  ">
               
             <h2 className="text-lg">{getUsername()}</h2>
-            {isOnline() && <span className="absolute top-6 right-0 text-[8px] text-green-500">Online</span>} 
+            {isOnline() && <span className="absolute top-4  left-11 h-2 w-2 rounded-full   text-[8px] bg-green-500"></span>} 
 
                         <div className={`flex justify-around w-full  "}`}>
               <p className={`text-xs w-[80%] tracking-wide truncate line-clamp-1 text-gray-500`}>

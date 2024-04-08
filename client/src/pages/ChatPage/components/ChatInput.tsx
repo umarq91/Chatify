@@ -2,14 +2,14 @@ import { chatContext } from '@/context/ChatContext';
 import { MdEmojiEmotions } from "react-icons/md";
 import {  useState,  useContext } from 'react';
 import { IoMdSend } from "react-icons/io";
+
 interface ChatInputProps {
   sendMessage: (e: any,msg:string) => void;
 }
 function ChatInput({ sendMessage }: ChatInputProps) {
   const [inputMessage, setInputMessage] = useState('');
   const [error, setError] = useState('');
-
-const {selectedChat}:any = useContext(chatContext)
+  const {selectedChat}:any = useContext(chatContext)
 
  
 
@@ -24,7 +24,7 @@ const {selectedChat}:any = useContext(chatContext)
   return (
     <div className="rounded-xl ">
       <form className=" absolute bottom-0 flex bg-[#17191C] w-full items-center  py-2  px-2 gap-3 ">
-      <MdEmojiEmotions color='Gray'  size={40} className=''/>
+      <MdEmojiEmotions color='Gray'  size={40}/>
       <input
   value={inputMessage}
   autoFocus
@@ -36,6 +36,7 @@ const {selectedChat}:any = useContext(chatContext)
   style={{ whiteSpace: 'pre-wrap' }}
 />
 {/*TODO :  Plus button here for images and files */}
+
 <IoMdSend className='bg-[#4C525C] rounded-full p-1 self-center text-center' color='white' size={42}/>
       </form>
       {error && <p className="error">{error}</p>}
