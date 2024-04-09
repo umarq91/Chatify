@@ -159,4 +159,25 @@ const removeFromGroup = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports=  {accessChat,fetchChats, createGroupChat,renameGroup,addToGroup,removeFromGroup}
+
+const leaveChat = asyncHandler(async (req, res) => {
+
+  // if a person deletes the chat or leaves the group , he technically left the chat and from his side chat will be wiped out
+  const { chatId  } = req.body;
+
+  const removed = await Chat.findByIdAndUpdate(
+    chatId,
+    { $pull: { users: req.user._id } },
+    { new: true }
+  )
+
+  if(!removed) {
+    res.status(404);
+    throw new Error("Chat not found")
+    }else{
+        const newChat = await Chat.findByIdAndDelete(chatId)
+        res.status(200).json({message: "Chat deleted", newChat});
+  }
+
+})
+module.exports=  {accessChat,fetchChats, createGroupChat,renameGroup,addToGroup,removeFromGroup, leaveChat}

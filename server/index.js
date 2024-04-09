@@ -16,6 +16,8 @@ const { Server } = require("socket.io");
 const cors = require('cors');
 const authenticateToken = require("./middlewares/TokenVerification");
 const { allusers } = require("./controllers/usersController");
+const Chat = require("./models/ChatModel");
+const { fetchChats } = require("./controllers/chatController");
 
 // Bodyparser middleware
 app.use(express.json());
@@ -82,6 +84,9 @@ io.on('connection', (socket) => {
     }
   }); 
 
+ 
+
+  // TODO : check newChat
   socket.on('newChat', (chatData) => {
     io.emit('newChat', chatData); // You might want to emit to specific users instead of broadcasting to all
   });

@@ -1,6 +1,6 @@
 const express =require('express');
 const TokenVerification = require('../middlewares/TokenVerification');
-const { accessChat, fetchChats, createGroupChat, renameGroup, addToGroup, removeFromGroup } = require('../controllers/chatController');
+const { accessChat, fetchChats, createGroupChat, renameGroup, addToGroup, removeFromGroup, leaveChat } = require('../controllers/chatController');
 const router = express.Router()
 
 
@@ -11,7 +11,7 @@ const router = express.Router()
  router.route('/rename').put(TokenVerification,renameGroup)
  router.route('/addingroup').post(TokenVerification,addToGroup)
 router.route('/removefromgroup').put(TokenVerification,removeFromGroup)
-
+router.route('/leaveChat').put(TokenVerification,leaveChat)
 
 
 
