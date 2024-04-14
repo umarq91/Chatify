@@ -13,3 +13,4 @@
 // TODO : update the Chats in real time 
 steps : socket.emit("updateChat",updatedChat) , trigger this whever chats update in backend
 listen to this on the client and set it to setChats() on the context
+// TODo : start a new Chat

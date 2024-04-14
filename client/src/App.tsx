@@ -20,16 +20,16 @@ function App() {
 
         <BrowserRouter>
         <UserProvider>
+          <ChatProvider>
       <SocketProvider>
 
-          <ChatProvider>
             <Routes>
               <Route path="/" element={<AuthPage />} />
        
               <Route path="/chat" element={<ChatPage />} />
             </Routes>
-          </ChatProvider>
       </SocketProvider>
+          </ChatProvider>
         </UserProvider>
         </BrowserRouter>
       </div>

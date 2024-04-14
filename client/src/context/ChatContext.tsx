@@ -3,10 +3,7 @@ import SocketContext from "./socketContext";
 interface ChatProps{
     children:ReactNode
 }
-interface Chat {
-    users: any[];
-    chatName?: string; 
-  }
+
 
 export const chatContext = createContext({});
 
@@ -14,14 +11,10 @@ export const chatContext = createContext({});
 export const ChatProvider = ({ children }:ChatProps) => {
 
     const [selectedChat,setSelectedChat] = useState(null)
-    const [chatResults, setChatResults] = useState<Chat[]>([]); 
+    const [chatResults,setChatResults] = useState([]); 
     const {socket}:any = useContext(SocketContext)
     
-useEffect(() => {
-    socket?.on('chats_updated', (updatedChats:any) => {
-        setChatResults(updatedChats); // Update state with received data
-      }); 
-},[])
+
 
 
     return(

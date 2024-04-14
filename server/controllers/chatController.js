@@ -2,7 +2,7 @@ const UserModel = require("../models/User.js");
 const { customError } = require("../utils/CustomError.js");
 const Chat = require("../models/ChatModel.js");
 const asyncHandler = require("express-async-handler");
- 
+const {io,socket} = require('../soocket/socket');
 const accessChat = asyncHandler(async (req, res) => {
     const { userId } = req.body;
 
@@ -45,6 +45,7 @@ const accessChat = asyncHandler(async (req, res) => {
                     "-password"
                 );
 
+                
                 res.status(200).send(FullChat);
             } catch (error) {
                 res.status(400);
@@ -52,6 +53,7 @@ const accessChat = asyncHandler(async (req, res) => {
             }
         }
 });
+
 
 const fetchChats = asyncHandler(async (req, res) => {
     
@@ -65,8 +67,10 @@ const fetchChats = asyncHandler(async (req, res) => {
                path:"latestMessage.sender",
                select:"username avatar email", 
             })
+          
             res.status(200).send(results);
         })
+        
 })
 
 
@@ -176,6 +180,8 @@ const leaveChat = asyncHandler(async (req, res) => {
     throw new Error("Chat not found")
     }else{
         const newChat = await Chat.findByIdAndDelete(chatId)
+        console.log("tet");
+        
         res.status(200).json({message: "Chat deleted", newChat});
   }
 

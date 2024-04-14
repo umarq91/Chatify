@@ -24,6 +24,7 @@ const SideSingleChat = ({ chat }: SideChatProps) => {
   const { selectedChat, setSelectedChat }: any = useContext(chatContext);
   const { user }: any = useContext(UserContext);
   const { onlineUsers }: any = useContext(SocketContext);
+  const {setChatResults}: any = useContext(chatContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const truncateText = (text: string, maxWords: number) => {
@@ -61,11 +62,12 @@ const SideSingleChat = ({ chat }: SideChatProps) => {
   const leaveChat = async() => {
     // console.log(chat.isGroupChat ? "leave group chat" : "leave single chat");
 try {
-  const res = await axios.put('/api/chat/leaveChat', {
+ await axios.put('/api/chat/leaveChat', {
     chatId: chat._id
   })
-  
-  
+
+  // to remove the chat from chatResults in Frontend
+  setChatResults((chatResults: any) => chatResults.filter((c: any) => c._id !== chat._id))
 
 } catch (error) {
   console.log(error);

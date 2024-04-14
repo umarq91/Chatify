@@ -5,7 +5,7 @@ const allusers = asyncHandler(async (req, res) => {
   const keyword = req.query.search;
   const loggedInUserId = req.user.id;
 
-  console.log("KeyWorkd " + keyword);
+ 
   const users = await UserModel.find({
     $and: [
       {
@@ -17,7 +17,7 @@ const allusers = asyncHandler(async (req, res) => {
       { _id: { $ne: loggedInUserId } } // Exclude the logged-in user
     ]
   });
-  console.log(users);
+ 
 
   if (users.length === 0) {
     return res.json({ message: 'No users found' });

@@ -2,6 +2,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import io from 'socket.io-client';
 import { UserContext } from './userContext';
+import { chatContext } from './ChatContext';
 interface SocketContextProps {
 children: React.ReactNode;
 }
@@ -12,6 +13,7 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
   const [socket, setSocket] = useState(null);
   const {user}:any = useContext(UserContext)
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const {setChatResults} = useContext(chatContext)
 
 
   useEffect(() => {
@@ -23,6 +25,12 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
 
       newSocket.on("onlineusers", (users:any) => {
         setOnlineUsers(users);
+      });
+      newSocket.on('newchat', (updatedChats: any) => {
+ 
+        setChatResults((prevResults) => [...prevResults, updatedChats]);
+        
+        
       });
 
       newSocket.on("disconnect", () => {

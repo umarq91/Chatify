@@ -68,7 +68,6 @@ const SearchUserModal = ({ addChat }: Props) => {
       setModalOpen(false); 
       setInputValue('')
       // add chat to other users in real time ..
-     socket.emit('newChat', data);
     } catch (error) {
       console.log(error);
     }

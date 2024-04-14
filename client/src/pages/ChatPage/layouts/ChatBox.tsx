@@ -37,9 +37,14 @@ import "./Chat.css"
         
           if (socket) {
             const messageReceivedHandler = (newMessage: any) => {
+              console.log("came");
+              
               const updatedResults = chatResults.map((chat: any) =>
                 chat._id === newMessage.chat._id ? { ...chat, latestMessage: newMessage } : chat
               );
+
+             
+
               setChatResults(updatedResults); // updating the sidebar
         
               setMessage((prevMessages: any) => [...prevMessages, newMessage]);
@@ -61,6 +66,11 @@ import "./Chat.css"
           // Emit to server for broadcasting
       
           socket.emit("newmessage", data); // Corrected emission     
+         // If the chat doesn't already exist in the chat results, start the chat in real-time
+            if (!chatResults.some(chat => chat._id === selectedChat._id)) {
+            const newChatData = { _id: selectedChat._id, latestMessage: data }; // Assuming data contains the new message object
+            setChatResults(prevResults => [...prevResults, newChatData]);
+          }
       };
 
     return (
@@ -92,7 +102,7 @@ import "./Chat.css"
 
 
     </div>
-    <div className="" ref={chatref}/>
+    <div className="pb-4" ref={chatref}/>
     </div>
     <ChatInput sendMessage={sendMessage}/>
     </div>
