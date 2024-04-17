@@ -2,30 +2,34 @@ import { useEffect } from "react";
 import { useSocket } from "@/context/socketContext";
 import { useChat } from "@/context/ChatContext";
 
-
-
-
 const useSocketMessageListener = () => {
-  const { socket } = useSocket();
+  const { socket }:any = useSocket();
+  const { chatResults, setChatResults, setMessage }:any = useChat();
 
-  const {chatResults,setChatResults,setMessage} = useChat()
+  const messageReceivedHandler = (newMessage:any) => {
 
-  const messageReceivedHandler = (newMessage: any) => {
-      
-    
-    const updatedResults = chatResults.map((chat: any) =>
-      chat._id === newMessage.chat._id ? { ...chat, latestMessage: newMessage } : chat
+    // Check if the chat already exists in chatResults
+    const existingChatIndex = chatResults.findIndex(
+      (chat) => chat._id === newMessage.chat._id
     );
 
-   
+    if (existingChatIndex !== -1) {
+      // Update latestMessage of the existing chat
+      const updatedResults = chatResults.map((chat, index) =>
+        index === existingChatIndex ? { ...chat, latestMessage: newMessage } : chat
+      );
+      setChatResults(updatedResults);
+    } else {
+      // Create a new chat object and add it to chatResults
+      const newChat = {
+        ...newMessage.chat,
+        latestMessage: newMessage
+      };
+      setChatResults([...chatResults, newChat]);
+    }
 
-    setChatResults(updatedResults); // updating the sidebar
-
-    setMessage((prevMessages: any) => [...prevMessages, newMessage]);
+    setMessage((prevMessages) => [...prevMessages, newMessage]);
   };
-
-
-
 
   useEffect(() => {
     if (socket) {
