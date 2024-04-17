@@ -4,7 +4,8 @@ import { checkSender } from "@/config/helpers";
 import { useUser } from "@/context/userContext";
 import ChatBoxTopBar from "../components/ChatBoxTopBar";
 import SocketContext from "@/context/socketContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import useSocketMessageListener from "@/hooks/useListenMessage";
 interface Props {
     selectedChat: any
     setSelectedChat: any
@@ -14,6 +15,8 @@ const RightSide = ({selectedChat, setSelectedChat}:Props) => {
   const {onlineUsers}:any = useContext(SocketContext)
 const {user}:any = useUser()
 
+
+useSocketMessageListener()
 
   return (
     <div

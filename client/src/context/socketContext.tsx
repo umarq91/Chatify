@@ -16,6 +16,7 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
   const {setChatResults} = useContext(chatContext)
 
 
+
   useEffect(() => {
     if (user) {
       const newSocket:any = io('http://localhost:5000', {
@@ -26,13 +27,12 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
       newSocket.on("onlineusers", (users:any) => {
         setOnlineUsers(users);
       });
-      newSocket.on('newchat', (updatedChats: any) => {
- 
-        setChatResults((prevResults) => [...prevResults, updatedChats]);
-        
-        
-      });
 
+
+
+
+     
+      
       newSocket.on("disconnect", () => {
         
       })
@@ -56,3 +56,5 @@ export const SocketProvider = ({ children }: SocketContextProps) => {
 };
 
 export default SocketContext;
+
+export const useSocket = () => useContext(SocketContext);

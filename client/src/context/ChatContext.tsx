@@ -13,13 +13,15 @@ export const ChatProvider = ({ children }:ChatProps) => {
     const [selectedChat,setSelectedChat] = useState(null)
     const [chatResults,setChatResults] = useState([]); 
     const {socket}:any = useContext(SocketContext)
-    
+    const [messages,setMessage] = useState([])
 
 
 
     return(
-        <chatContext.Provider value={{selectedChat,setSelectedChat,chatResults,setChatResults}}>
+        <chatContext.Provider value={{selectedChat,setSelectedChat,chatResults,setChatResults,setMessage,messages}}>
             {children}
             </chatContext.Provider>
     )
 }
+
+export const useChat = () => useContext(chatContext)

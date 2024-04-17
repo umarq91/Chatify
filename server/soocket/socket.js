@@ -11,13 +11,18 @@ const io = new Server(server, {
   },
 });
 
-const onlineUsersArray = [];
+const usersSocketMap =  {}
+
+const getReceiverSocketId = (receiverId) => {
+	return usersSocketMap[receiverId];
+};
 
 io.on('connection', (socket) => {
-  console.log("user connected");
+ 
+  
   const userId = socket.handshake.query.userId;
-  onlineUsersArray.push(userId);
-  io.emit('onlineusers', onlineUsersArray);
+  if (userId != "undefined") usersSocketMap[userId] = socket.id;
+  io.emit('onlineusers', Object.keys(usersSocketMap));
 
   socket.on('joinchat', (chatId) => {
     socket.join(chatId);
@@ -26,19 +31,25 @@ io.on('connection', (socket) => {
 
   socket.on('newmessage', async (message) => {
     const { chat } = message;
-    io.to(chat._id).emit('messagereceived', message);
+
+
+    for (const user of chat?.users) {
+      const receiverSocketId = usersSocketMap[user._id];
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit('messagereceived', message);
+      }
+
+    }
+  
   });
 
 
 
   socket.on('disconnect', () => {
     console.log('A user disconnected');
-    const index = onlineUsersArray.indexOf(userId);
-    if (index !== -1) {
-      onlineUsersArray.splice(index, 1);
-    }
-    io.emit("onlineusers", onlineUsersArray);
+    delete usersSocketMap[userId];
+		io.emit("getOnlineUsers", Object.keys(usersSocketMap));
   });
 });
 
-module.exports = { io, server ,app};
+module.exports = { io, server ,app , getReceiverSocketId};
