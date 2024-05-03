@@ -19,18 +19,17 @@ function App() {
         <Toaster />
 
         <BrowserRouter>
-        <UserProvider>
-          <ChatProvider>
-      <SocketProvider>
+          <UserProvider>
+            <ChatProvider>
+              <SocketProvider>
+                <Routes>
+                  <Route path="/" element={<AuthPage />} />
 
-            <Routes>
-              <Route path="/" element={<AuthPage />} />
-       
-              <Route path="/chat" element={<ChatPage />} />
-            </Routes>
-      </SocketProvider>
-          </ChatProvider>
-        </UserProvider>
+                  <Route path="/chat" element={<ChatPage />} />
+                </Routes>
+              </SocketProvider>
+            </ChatProvider>
+          </UserProvider>
         </BrowserRouter>
       </div>
     </>

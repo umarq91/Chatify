@@ -2,7 +2,8 @@ const UserModel = require("../models/User.js");
 const { customError } = require("../utils/CustomError.js");
 const Chat = require("../models/ChatModel.js");
 const asyncHandler = require("express-async-handler");
-const {io,socket} = require('../soocket/socket');
+const {io,socket,getReceiverSocketId} = require('../soocket/socket');
+
 const accessChat = asyncHandler(async (req, res) => {
     const { userId } = req.body;
 
@@ -45,7 +46,6 @@ const accessChat = asyncHandler(async (req, res) => {
                     "-password"
                 );
 
-                
                 res.status(200).send(FullChat);
             } catch (error) {
                 res.status(400);

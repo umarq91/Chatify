@@ -1,5 +1,5 @@
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext} from 'react';
 import { chatContext } from "@/context/ChatContext";
 
 
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import Sidebar from "./layouts/Sidebar";
 import RightSide from './layouts/RightSide';
+import useSocketMessageListener from '@/hooks/useListenMessage';
 
 
 const ChatPage = () => {
@@ -17,6 +18,7 @@ const ChatPage = () => {
   const { selectedChat, setSelectedChat }: any = useContext(chatContext);
   const { user, loading }: any = useContext(UserContext);
 
+  useSocketMessageListener();
   if(loading) return <h1>Loading...</h1>
 
   if(!user) return navigate("/")

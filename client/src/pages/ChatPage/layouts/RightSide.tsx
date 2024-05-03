@@ -3,9 +3,10 @@ import ChatBox from "../layouts/ChatBox";
 import { checkSender } from "@/config/helpers";
 import { useUser } from "@/context/userContext";
 import ChatBoxTopBar from "../components/ChatBoxTopBar";
-import SocketContext from "@/context/socketContext";
+import SocketContext, { useSocket } from "@/context/socketContext";
 import { useContext, useEffect } from "react";
-import useSocketMessageListener from "@/hooks/useListenMessage";
+import { useChat } from "@/context/ChatContext";
+
 interface Props {
     selectedChat: any
     setSelectedChat: any
@@ -13,10 +14,9 @@ interface Props {
 
 const RightSide = ({selectedChat, setSelectedChat}:Props) => {
   const {onlineUsers}:any = useContext(SocketContext)
+
 const {user}:any = useUser()
-
-
-useSocketMessageListener()
+const { socket }:any = useSocket();
 
   return (
     <div

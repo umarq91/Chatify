@@ -44,6 +44,9 @@ io.on('connection', (socket) => {
   });
 
 
+  socket.on('typing',(room)=>{
+   
+  })
 
   socket.on('disconnect', () => {
     console.log('A user disconnected');

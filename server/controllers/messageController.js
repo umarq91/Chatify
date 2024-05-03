@@ -3,6 +3,8 @@ const MessageModel = require("../models/MessageModel");
 const UserModel = require("../models/User");
 const ChatModel = require("../models/ChatModel"); // Assuming you have a Chat model
 
+
+// check if Chat Exists where user is part of
 const sendMessage = asyncHandler(async (req, res) => {
   const { content, chatId } = req.body;
 
@@ -14,6 +16,10 @@ const sendMessage = asyncHandler(async (req, res) => {
   const { _id: senderId } = req.user;
 
   try {
+
+
+
+
     let newMessage = await MessageModel.create({
       sender: senderId,
       content: content,

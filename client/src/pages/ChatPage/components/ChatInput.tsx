@@ -2,6 +2,8 @@ import { MdEmojiEmotions } from "react-icons/md";
 import {  useState,  useContext, ReactEventHandler, EventHandler } from 'react';
 import { IoMdSend } from "react-icons/io";
 import EmojiPicker from 'emoji-picker-react';
+import { useSocket } from "@/context/socketContext";
+import { chatContext } from "@/context/ChatContext";
 
 interface ChatInputProps {
   sendMessage: (e: any,msg:string) => void;
@@ -10,7 +12,8 @@ function ChatInput({ sendMessage }: ChatInputProps) {
   const [inputMessage, setInputMessage] = useState('');
   const [error, setError] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-
+  const {selectedChat} = useContext(chatContext)
+const {socket } = useSocket()
  
 
 
@@ -39,6 +42,12 @@ function ChatInput({ sendMessage }: ChatInputProps) {
     setShowEmojiPicker(false)
   }
 
+
+  const handleInput = (e:any) => {
+   setInputMessage(e.target.value)
+   socket.emit('typing',selectedChat?._id)
+ 
+  }
   return (
     <div className="rounded-xl ">
       <form
@@ -50,7 +59,7 @@ function ChatInput({ sendMessage }: ChatInputProps) {
       <input
           value={inputMessage}
           autoFocus
-          onChange={(e) => setInputMessage(e.target.value)}
+          onChange={handleInput}
           onPaste={(e) => setInputMessage(e.clipboardData.getData('text'))}
           onKeyPress={handleKeyPress}
           placeholder={`Type you message`}
